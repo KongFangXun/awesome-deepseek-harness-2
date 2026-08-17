@@ -193,6 +193,7 @@ Git リポジトリからインストールする場合は、commit を固定し
 - [dsh-plannotator](https://github.com/titanwings/dsh-plannotator)：Agent の計画をセクションごとに注釈し、構造化フィードバックを送信。下書き分離、バージョン固定、古い計画の拒否に対応。
 - [dsh-record-replay](https://github.com/humblebanana/dsh-record-replay)：macOS デスクトップワークフローを記録して Skill を生成。現在は Xcode Command Line Tools と、別途用意した `open-record-replay` のローカルソースが必要。
 - [dsh-science-workbench](https://github.com/poplarity/dsh-science-workbench)：Cell、図、フィードバック、再実行の系譜を Manifest に記録し、環境 Snapshot と入出力 Hash も保存する再現可能な科学ワークベンチ。MIT、`v0.1.1` で、まだ初期段階。
+- [dsh-omicos](https://github.com/omicverse/dsh-omicos)：OmicOS のバイオインフォマティクス機能を DSH に接続し、永続 Python / R Kernel、Capability Catalog、Background Job、実行状況 View を提供。GPL-3.0-only、npm `0.2.1`。分析 Tool は `permission_mode: full` で動作し、ローカル Kernel を起動する場合がある。Cloud Model と上位 Plan には OmicOS Account が必要。
 
 ### コンテキスト・Session・入力
 
@@ -226,7 +227,8 @@ Git リポジトリからインストールする場合は、commit を固定し
 ### サンドボックスと実行
 
 - [sandbox-micro](https://github.com/omdsh-dev/sandbox-micro)：fail-closed な microsandbox microVM 能力を提供。導入後も Provider とモデル向け Tool は個別に明示有効化するまで無効で、プラットフォーム検査に失敗しても無制限の Host 実行へフォールバックしない。テストディレクトリはあるが正式 Release はなく、`package.json` は BSD-3-Clause を宣言する一方でルートに `LICENSE` ファイルがないため初期段階。
-- [dsh-win32](https://github.com/sjh9714/dsh-win32)：Windows 向けに Sandbox 内で動作する永続 Shell、Minimal Mode、`doctor` 診断を提供。MIT、`v0.9.3`、DSH `0.1.0-rc.6` ベース。任意の Sandboxed Mode は GPLv2 BusyBox を Download し、pnpm がなければ `setup` が Corepack 経由で有効化するため、内容を理解したうえで実行する必要がある。
+- [dsh-credentials-keyring](https://github.com/irisnb/dsh-credentials-keyring)：平文 Credential File を Windows Credential Manager、macOS Keychain、Linux Secret Service に置き換え、Secret Service のない Linux では fail closed。MIT `0.1.0` で Memory Backend Test はあるが npm / Release はまだなく、実 OS Keychain の Platform 別 Smoke Test も未完了のため初期段階。
+- [dsh-win32](https://github.com/sjh9714/dsh-win32)：Windows 向けに Sandbox 内で動作する永続 Shell、Minimal Mode、`doctor` 診断を提供。MIT `v0.12.0`、DSH `0.1.0-rc.6` ベース。`SIGTERM`、Pipeline、Background Job の Cleanup を修正し、85 Test と 3 OS Matrix で検証。Windows Console Process は Graceful Termination 失敗後に Force Kill へ進む場合がある。任意 Sandbox は GPLv2 BusyBox を Download し、pnpm がなければ `setup` が Corepack で有効化する。
 
 ### テーマとスキン
 
@@ -240,8 +242,10 @@ Git リポジトリからインストールする場合は、commit を固定し
 - [Open Design](https://github.com/nexu-io/open-design)：構造化 Streaming、モデル検出、Cancel、Session 再開に対応する DSH ネイティブ Runtime Adapter を備えた Local-first のオープンソースデザインアプリ。Apache-2.0 で、通常のプラグインではなく大規模な独立製品。
 - [dsh-multica-runtime](https://github.com/forrestchang/dsh-multica-runtime)：Multica と DSH を接続する初期段階の Runtime ブリッジ。現在パッケージは `private`、`UNLICENSED` とされ、インストールと配布の境界は未整備。
 - [dsh-lark-bot](https://github.com/PlutoKeating/dsh-lark-bot)：ローカル DSH を Feishu / Lark に接続し、ストリーミングカード、ワークスペース、Session 復元、承認を提供。AGPL-3.0 で、アプリ認証情報はモード `600` で保護されたローカルの平文設定に保存される。
+- [dsh-lark](https://github.com/sugarforever/dsh-lark)：公式 Node SDK と WebSocket 長接続で DSH を Feishu / Lark に接続し、Public Callback Endpoint は不要。MIT、npm / GitHub `v0.1.1`。既定では Message Scope 3 項目のみを要求し、Credential は Environment Variable から読む。実行時は Bot として外部 Message を受信・送信する。
 - [dsh-qqbot](https://github.com/tencent-connect/dsh-qqbot)：Tencent が管理する QQ Bot プラグイン。QR Code 連携、Private/Group Session の分離、再起動後の復元に対応。MIT、`0.1.0` で、連携時に認証情報をローカル Profile へ保存する。
 - [LoongSuite DSH Plugin](https://github.com/loongsuite/dsh-plugin)：Agent Turn、Model Call、Tool 実行、Token 使用量を OpenTelemetry GenAI Trace に変換し、Jaeger、Tempo、SigNoz、Langfuse などの OTLP Backend へ送信する。Apache-2.0、Beta で、DSH `0.1.0-rc.6` の Headless / Web Profile で検証済み。Content Capture は既定で無効だが、有効化すると Source Code、Credential、個人情報が外部へ送られる可能性がある。
+- [dsh-wakatime](https://github.com/dingyi222666/dsh-wakatime)：DSH の File Activity、AI Line Change、Project Time を WakaTime へ送信。MIT、npm `0.1.1`。Test はあるが新しいため初期段階。WakaTime API Key が必要で、`~/.wakatime/dsh-wakatime/` に State を書き、CLI がなければ `wakatime-cli` を自動 Download / Update する。
 
 ## 開発ツール
 
@@ -256,6 +260,8 @@ Git リポジトリからインストールする場合は、commit を固定し
 - [dsh-custom-tool](https://github.com/omdsh-dev/dsh-custom-tool)：Monaco エディターでサンドボックス化された JavaScript ツールを作成・管理。
 - [dsh-open-in-vscode](https://github.com/omdsh-dev/dsh-open-in-vscode)：Web UI から現在のワークスペースを VS Code で直接開く。
 - [dsh-movein](https://github.com/sjh9714/dsh-movein)：1 コマンドで Claude Code の Skill、MCP、hooks、グローバル指示を DSH へ移行。デフォルトはドライラン。`CLAUDE.md` は DSH がネイティブに読み、Session 履歴は対象外。MIT。DSH `0.1.0-rc.6` で検証済みだが新しいため初期段階。
+- [dshpack](https://github.com/hili986/dshpack)：Skill、MCP、Profile Patch、Permission Default を Install・共有・監査可能な DSH Profile に Package 化。Build Script は既定で拒否し、dry-run、Source Pin、Credential Scan、Transaction Rollback を備える。MIT、M0 Prerelease、npm 未公開で `init` / `pack` も未実装のため初期段階。
+- [hooks-adapter](https://github.com/JohnXu22786/hooks-adapter)：Claude Code、Codex、OpenCode の hooks Config を DSH で直接再利用し、Shell、Webhook、LLM、Subagent Handler を提供。MIT、Repository は 111 Test を示すが Release はまだない。自動検出した hooks は Command 実行や Data 送信が可能なため初期段階。
 
 ## 謝辞
 

@@ -193,6 +193,7 @@ The following projects provide standalone user interfaces, distribution formats,
 - [dsh-plannotator](https://github.com/titanwings/dsh-plannotator): annotates Agent plans section by section and submits structured feedback, with draft isolation, version binding, and stale-plan rejection.
 - [dsh-record-replay](https://github.com/humblebanana/dsh-record-replay): records macOS desktop workflows and generates Skills; currently requires Xcode Command Line Tools and a separate local `open-record-replay` source checkout.
 - [dsh-science-workbench](https://github.com/poplarity/dsh-science-workbench): reproducible science workbench that records cells, figures, feedback, and rerun lineage in a manifest, together with environment snapshots and input/output hashes; MIT and `v0.1.1`, still Early.
+- [dsh-omicos](https://github.com/omicverse/dsh-omicos): connects OmicOS bioinformatics to DSH with a persistent Python / R kernel, capability catalog, background jobs, and live execution views; GPL-3.0-only and published to npm as `0.2.1`. Analysis tools run with `permission_mode: full` and may start a local kernel; cloud-backed models and higher tiers require an OmicOS account.
 
 ### Context, Sessions, and Input
 
@@ -226,7 +227,8 @@ The following projects provide standalone user interfaces, distribution formats,
 ### Sandboxing and Execution
 
 - [sandbox-micro](https://github.com/omdsh-dev/sandbox-micro): provides a fail-closed microsandbox microVM capability; both the Provider and model-facing tools stay disabled after installation until separately enabled, and failed platform checks never degrade to unconstrained host execution. It has test directories but no formal Release; `package.json` declares BSD-3-Clause, but the repository has no root `LICENSE` file, so it is marked Early.
-- [dsh-win32](https://github.com/sjh9714/dsh-win32): Windows persistent shell that works inside the sandbox, plus a minimal mode and `doctor` diagnostics; MIT and `v0.9.3`, built against DSH `0.1.0-rc.6`. Its optional sandboxed mode downloads GPLv2 BusyBox, and `setup` enables pnpm through Corepack when missing, so run it only with informed consent.
+- [dsh-credentials-keyring](https://github.com/irisnb/dsh-credentials-keyring): replaces plaintext credential files with Windows Credential Manager, macOS Keychain, or Linux Secret Service, and fails closed on Linux without Secret Service; MIT `0.1.0`, with in-memory backend tests but no npm package or Release yet. Real OS keychains still need per-platform smoke tests, so it is marked Early.
+- [dsh-win32](https://github.com/sjh9714/dsh-win32): Windows persistent shell that works inside the sandbox, plus a minimal mode and `doctor` diagnostics; MIT `v0.12.0`, built against DSH `0.1.0-rc.6`, now fixing `SIGTERM`, pipeline, and background-job cleanup with 85 tests and a three-OS matrix. Windows console processes may escalate to forced termination after graceful termination fails; the optional sandbox also downloads GPLv2 BusyBox, and `setup` enables pnpm through Corepack when missing.
 
 ### Themes and Skins
 
@@ -240,8 +242,10 @@ The following projects provide standalone user interfaces, distribution formats,
 - [Open Design](https://github.com/nexu-io/open-design): local-first open-source design application with a native DSH runtime adapter for structured streaming, model discovery, cancellation, and session resume; Apache-2.0 and a large standalone product rather than an ordinary plugin.
 - [dsh-multica-runtime](https://github.com/forrestchang/dsh-multica-runtime): early runtime bridge connecting Multica and DSH; the package is currently marked `private` and `UNLICENSED`, with incomplete installation and distribution boundaries.
 - [dsh-lark-bot](https://github.com/PlutoKeating/dsh-lark-bot): connects local DSH to Feishu / Lark with streaming cards, workspaces, session recovery, and approvals; licensed under AGPL-3.0, with app credentials stored locally in plaintext configuration protected by mode `600`.
+- [dsh-lark](https://github.com/sugarforever/dsh-lark): connects DSH to Feishu / Lark through the official Node SDK and a WebSocket connection, without a public callback endpoint; MIT and npm / GitHub `v0.1.1`. It requests only three message scopes by default and reads credentials from environment variables; actual use receives and sends external messages as the bot.
 - [dsh-qqbot](https://github.com/tencent-connect/dsh-qqbot): Tencent-maintained QQ Bot plugin with QR-code binding, isolated direct/group sessions, and restart recovery; MIT and `0.1.0`, with credentials saved to the local Profile during binding.
 - [LoongSuite DSH Plugin](https://github.com/loongsuite/dsh-plugin): converts Agent turns, model calls, tool executions, and token usage into OpenTelemetry GenAI traces for OTLP backends such as Jaeger, Tempo, SigNoz, and Langfuse; Apache-2.0 and Beta, tested with DSH `0.1.0-rc.6` in headless and Web profiles. Content capture is off by default; enabling it may export source code, credentials, and personal data.
+- [dsh-wakatime](https://github.com/dingyi222666/dsh-wakatime): reports DSH file activity, AI line changes, and project time to WakaTime; MIT and npm `0.1.1`, with tests but still new and marked Early. It requires a WakaTime API key, writes state under `~/.wakatime/dsh-wakatime/`, and automatically downloads or updates `wakatime-cli` when absent.
 
 ## Developer Tools
 
@@ -256,6 +260,8 @@ The following projects provide standalone user interfaces, distribution formats,
 - [dsh-custom-tool](https://github.com/omdsh-dev/dsh-custom-tool): creates and manages sandboxed JavaScript tools through a Monaco editor.
 - [dsh-open-in-vscode](https://github.com/omdsh-dev/dsh-open-in-vscode): opens the current workspace directly in VS Code from the Web UI.
 - [dsh-movein](https://github.com/sjh9714/dsh-movein): moves Claude Code Skills, MCP servers, hooks, and global instructions into DSH with one command; dry-run by default, `CLAUDE.md` is read natively, and session history is out of scope. MIT, verified on DSH `0.1.0-rc.6`, still new and marked Early.
+- [dshpack](https://github.com/hili986/dshpack): packages Skills, MCP servers, Profile patches, and permission defaults into installable, shareable, auditable DSH Profiles; build scripts are denied by default, with dry-run planning, pinned sources, credential scanning, and transactional rollback. MIT and M0 prerelease, not yet on npm, with `init` / `pack` still unimplemented, so marked Early.
+- [hooks-adapter](https://github.com/JohnXu22786/hooks-adapter): lets DSH reuse Claude Code, Codex, and OpenCode hooks configs directly, with Shell, Webhook, LLM, and Subagent handlers; MIT, claiming 111 repository tests but no Release yet. Auto-discovered hooks can execute commands and transmit data, so it is marked Early.
 
 ## Acknowledgements
 
