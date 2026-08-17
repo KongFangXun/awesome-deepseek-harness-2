@@ -56,6 +56,8 @@ This project follows a curated, quality-over-quantity approach to collecting exc
 
 [DeepSeek Harness](https://deepseek.com/harness/) (also known as DSH or `dsh`) is an open-source Agent Harness project from DeepSeek AI. Built on [Cordis](https://github.com/cordiverse/cordis), it follows an **Everything is a Plugin** architecture: model adapters, tools, session logs, interfaces, and the Agent Loop can all be composed and replaced through a plugin tree.
 
+The latest verified official developer preview is [`0.1.0-rc.7`](https://github.com/deepseek-ai/deepseek-harness/tree/dsh-v0.1.0-rc.7). DSH versions shown for individual projects below represent the development or test baseline claimed by their authors and should not be treated as automatic compatibility with the latest preview.
+
 ### Launch the Web UI
 
 Install [Node.js](https://nodejs.org/) 22.19.x or 24+ (24+ recommended), then run:
@@ -194,6 +196,8 @@ The following projects provide standalone user interfaces, distribution formats,
 - [dsh-record-replay](https://github.com/humblebanana/dsh-record-replay): records macOS desktop workflows and generates Skills; currently requires Xcode Command Line Tools and a separate local `open-record-replay` source checkout.
 - [dsh-science-workbench](https://github.com/poplarity/dsh-science-workbench): reproducible science workbench that records cells, figures, feedback, and rerun lineage in a manifest, together with environment snapshots and input/output hashes; MIT and `v0.1.1`, still Early.
 - [dsh-omicos](https://github.com/omicverse/dsh-omicos): connects OmicOS bioinformatics to DSH with a persistent Python / R kernel, capability catalog, background jobs, and live execution views; GPL-3.0-only and published to npm as `0.2.1`. Analysis tools run with `permission_mode: full` and may start a local kernel; cloud-backed models and higher tiers require an OmicOS account.
+- [dsh-crew](https://github.com/ZSeven-W/dsh-crew): dispatches real DSH workers from Claude Code or Codex with progress reporting, status shards, and tier policies; MIT and npm `0.1.0-rc.1`. It writes to `~/.config/dsh-crew/status.d/`, and external model services may require API keys. It currently claims validation only against DSH `0.1.0-rc.6` and has no visible tests, so it is marked Early.
+- [dsh-trading](https://github.com/maddogfinance/dsh-trading): DSH workbench for trading research with deterministic indicators, CSV providers, and interactive charts; MIT and npm `@dsh-trading/bundle@0.1.0`. It exposes no order-execution interface and heuristically blocks fund-moving tools, but that filter is not a complete security boundary, so the project is marked Early.
 
 ### Context, Sessions, and Input
 
@@ -205,7 +209,8 @@ The following projects provide standalone user interfaces, distribution formats,
 - [dsh-prompt-studio](https://github.com/Moeblack/dsh-prompt-studio): edits system-prompt fragments with a live preview.
 - [dsh-turn-rewind](https://github.com/Anionex/dsh-turn-rewind): rewinds conversations and workspace state through a persistent Change Ledger.
 - [dsh-compaction-instant](https://github.com/KitDoesIt/dsh-compaction-instant): replaces LLM summarization with deterministic compilation and restores compressed content through `recall` / `search`; replacing the built-in compactor requires an npm alias and is a deeper runtime modification.
-- [dsh-whale-report](https://github.com/SenmuuuuW/dsh-whale-report): generates daily, weekly, monthly, yearly, and custom-range reports read-only from session event logs without rewriting session history; MIT and `v0.2.0`, still Early.
+- [toolshrink](https://github.com/unclecode/toolshrink): performs content-aware reduction for test, diff, JSON, tree, log, and install output while retaining references to originals when needed; MIT `0.1.0`. It currently requires a source build and an edit to the global `~/.dsh/cordis.patch.yml`; stored originals are removed after 24 hours, so it is marked Early.
+- [dsh-whale-report](https://github.com/SenmuuuuW/dsh-whale-report): generates daily, weekly, monthly, yearly, and custom-range reports read-only from session event logs, adding DeepTrace, cost and balance views, findings, collaboration, activity, resources, risks, and session traces in `v0.4.0`; it does not rewrite session history, is MIT-licensed, and remains Early.
 
 ### Browser, Vision, and Interface
 
@@ -236,6 +241,7 @@ The following projects provide standalone user interfaces, distribution formats,
 
 ## External Integrations
 
+- [dsh-oomol](https://github.com/oomol-lab/dsh-oomol): progressively discovers apps and actions through OOMOL Connector, inspects schemas, and executes connected SaaS capabilities; MIT and npm `0.1.4`. DSH stores only a revocable OOMOL MCP key while third-party OAuth tokens remain in OOMOL; removing the plugin does not disconnect provider accounts, and action execution currently has no idempotency key.
 - [Ollama](https://github.com/ollama/ollama/blob/main/docs/integrations/deepseek-harness.mdx): Ollama's official launcher for DSH, not a DeepSeek-official distribution. Use `ollama launch dsh` to install and start DSH, choose an Ollama model, and configure Web search; settings are stored separately in `~/.ollama/launch/dsh/settings.yaml` and do not modify `~/.dsh/settings.yaml`. Currently marked as a developer preview.
 - [Sealos Skills](https://github.com/labring/sealos-skills): a DSH Profile Bundle maintained by the Sealos team, providing eight cloud-native Skills for application deployment, databases, object storage, and related workflows. Actual use changes external Sealos Cloud resources and requires an account and relevant credentials; login writes `~/.sealos/kubeconfig`, and some flows require a relaxed sandbox. `package.json` declares MIT, but the repository currently has no root `LICENSE` file.
 - [Nowledge Mem](https://mem.nowledge.co/integrations/deepseek-harness): adds Working Memory, prompt-time retrieval, MCP tools, and session capture to DSH; depends on the external Nowledge Mem product and `nmem` CLI and should be evaluated separately from open-source plugins.
