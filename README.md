@@ -267,4 +267,4 @@ dsh --profile web --dump-config
 
 感谢 DeepSeek Harness 团队、Cordis 社区、首批内测开发者，以及所有公开文档、插件、客户端、实践和生态索引的贡献者。
 
-[![滑动变祖器：当前状态为梁圣，点击进入完整交互版](assets/media/liang-intensity-calibrator-card-liangsheng-v2.png)](https://lichtspektrum.github.io/liang-intensity-calibrator/)
+[![滑动变祖器：当前状态为梁子，点击进入完整交互版](assets/media/liang-intensity-calibrator-card-liangzi.png)](https://lichtspektrum.github.io/liang-intensity-calibrator/)

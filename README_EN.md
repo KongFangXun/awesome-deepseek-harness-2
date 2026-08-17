@@ -267,4 +267,4 @@ The following projects provide standalone user interfaces, distribution formats,
 
 Thanks to the DeepSeek Harness team, the Cordis community, the first private-beta developers, and everyone contributing public documentation, plugins, clients, practical experience, and ecosystem indexes.
 
-[![Liang Evolution Slider: current state Liang Sheng; click to open the full interactive version](assets/media/liang-intensity-calibrator-card-liangsheng-v2.png)](https://lichtspektrum.github.io/liang-intensity-calibrator/)
+[![Liang Evolution Slider: current state Liangzi; click to open the full interactive version](assets/media/liang-intensity-calibrator-card-liangzi.png)](https://lichtspektrum.github.io/liang-intensity-calibrator/)

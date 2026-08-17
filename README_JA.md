@@ -267,4 +267,4 @@ Git リポジトリからインストールする場合は、commit を固定し
 
 DeepSeek Harness チーム、Cordis コミュニティ、初期クローズドベータ開発者、そして公開ドキュメント、プラグイン、クライアント、実践知、エコシステム索引に貢献してくださった皆さまに感謝します。
 
-[![梁進化スライダー：現在の状態は梁聖。クリックして完全なインタラクティブ版を開く](assets/media/liang-intensity-calibrator-card-liangsheng-v2.png)](https://lichtspektrum.github.io/liang-intensity-calibrator/)
+[![梁進化スライダー：現在の状態は梁子。クリックして完全なインタラクティブ版を開く](assets/media/liang-intensity-calibrator-card-liangzi.png)](https://lichtspektrum.github.io/liang-intensity-calibrator/)
