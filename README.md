@@ -56,6 +56,8 @@
 
 [DeepSeek Harness](https://deepseek.com/harness/)（简称 DSH 或 `dsh`）是 DeepSeek AI 开源的 Agent Harness 项目。它基于 [Cordis](https://github.com/cordiverse/cordis)，采用 **Everything is a Plugin（一切皆插件）** 的架构：模型适配器、工具、会话日志、界面和 Agent Loop 都可以通过插件树组合与替换。
 
+当前核验到的官方开发者预览版为 [`0.1.0-rc.7`](https://github.com/deepseek-ai/deepseek-harness/tree/dsh-v0.1.0-rc.7)。下方各项目标注的 DSH 版本表示其作者实际声明的开发或测试基线，不应自动视为已兼容最新预览版。
+
 ### 启动 Web UI
 
 安装 [Node.js](https://nodejs.org/) 22.19.x 或 24+（推荐 24+）后执行：
@@ -194,6 +196,8 @@ dsh --profile web --dump-config
 - [dsh-record-replay](https://github.com/humblebanana/dsh-record-replay)：录制 macOS 桌面工作流并生成 Skill；当前依赖 Xcode Command Line Tools 和独立的 `open-record-replay` 本地源码副本。
 - [dsh-science-workbench](https://github.com/poplarity/dsh-science-workbench)：面向可复现实验的工作台，把 Cell、图表、反馈与重跑链路记录到 Manifest，并保存环境快照和输入输出哈希；MIT、`v0.1.1`，功能仍处早期。
 - [dsh-omicos](https://github.com/omicverse/dsh-omicos)：把 OmicOS 生物信息学能力接入 DSH，提供持久 Python / R 内核、能力目录、后台任务和执行过程视图；GPL-3.0-only、npm `0.2.1`。分析工具以 `permission_mode: full` 运行并可能启动本地内核，云模型和高级套餐需要 OmicOS 账号。
+- [dsh-crew](https://github.com/ZSeven-W/dsh-crew)：从 Claude Code 或 Codex 调度真实 DSH Worker，并提供进度、状态分片和分层策略；MIT、npm `0.1.0-rc.1`，会写入 `~/.config/dsh-crew/status.d/`，外部模型服务可能需要 API Key。当前仅声明在 DSH `0.1.0-rc.6` 验证，且尚无可见测试，标注为早期。
+- [dsh-trading](https://github.com/maddogfinance/dsh-trading)：面向交易研究的 DSH 工作台，提供确定性指标、CSV 数据源和交互式图表；MIT、npm `@dsh-trading/bundle@0.1.0`。项目不提供订单执行接口，并以启发式规则拦截资金移动类工具，但该拦截并非完备安全边界，标注为早期。
 
 ### 上下文、会话与输入
 
@@ -205,7 +209,8 @@ dsh --profile web --dump-config
 - [dsh-prompt-studio](https://github.com/Moeblack/dsh-prompt-studio)：编辑系统提示词片段并提供实时预览。
 - [dsh-turn-rewind](https://github.com/Anionex/dsh-turn-rewind)：基于持久 Change Ledger 回退对话和工作区状态。
 - [dsh-compaction-instant](https://github.com/KitDoesIt/dsh-compaction-instant)：以确定性编译替代 LLM 摘要，并通过 `recall` / `search` 恢复被压缩内容；替换内置压缩器时需要使用 npm alias，属于较深的运行时改造。
-- [dsh-whale-report](https://github.com/SenmuuuuW/dsh-whale-report)：从会话事件日志只读生成日报、周报、月报、年报和自定义区间报告，不改写会话历史；MIT、`v0.2.0`，仍属早期。
+- [toolshrink](https://github.com/unclecode/toolshrink)：按测试、Diff、JSON、目录树、日志和安装输出的结构做内容感知压缩，并在需要时保留原始输出引用；MIT、`0.1.0`，目前需从源码构建并修改全局 `~/.dsh/cordis.patch.yml`，暂存的原始输出会在 24 小时后清理，标注为早期。
+- [dsh-whale-report](https://github.com/SenmuuuuW/dsh-whale-report)：从会话事件日志只读生成日报、周报、月报、年报和自定义区间报告，并在 `v0.4.0` 增加 DeepTrace、成本与余额、发现项、协作、活动、资源、风险和 Session Trace；不改写会话历史，MIT，仍属早期。
 
 ### 浏览器、视觉与界面
 
@@ -236,6 +241,7 @@ dsh --profile web --dump-config
 
 ## 外部集成
 
+- [dsh-oomol](https://github.com/oomol-lab/dsh-oomol)：通过 OOMOL Connector 渐进式发现应用和 Action、检查 Schema 并执行已连接的 SaaS 能力；MIT、npm `0.1.4`。DSH 只保存可撤销的 OOMOL MCP Key，第三方 OAuth Token 留在 OOMOL；卸载插件不会自动断开第三方账户，Action 执行目前也没有幂等键。
 - [Ollama](https://github.com/ollama/ollama/blob/main/docs/integrations/deepseek-harness.mdx)：Ollama 官方提供的启动方式，不是 DeepSeek 官方发行包。通过 `ollama launch dsh` 安装并启动 DSH、选择 Ollama 模型和配置 Web 搜索；独立设置写入 `~/.ollama/launch/dsh/settings.yaml`，不会改动 `~/.dsh/settings.yaml`。当前标注为开发者预览。
 - [Sealos Skills](https://github.com/labring/sealos-skills)：由 Sealos 团队维护的 DSH Profile Bundle，提供应用部署、数据库、对象存储等八个云原生 Skills；实际使用会操作外部 Sealos Cloud 资源，需要账号与相关凭据，登录会写入 `~/.sealos/kubeconfig`，部分流程需放宽沙箱权限。`package.json` 声明 MIT，但仓库根目录当前缺少 `LICENSE` 文件。
 - [Nowledge Mem](https://mem.nowledge.co/integrations/deepseek-harness)：为 DSH 提供 Working Memory、提示时检索、MCP 工具和会话捕获；依赖外部 Nowledge Mem 产品与 `nmem` CLI，适合与开源插件分开评估。

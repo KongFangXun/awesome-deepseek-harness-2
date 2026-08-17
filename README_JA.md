@@ -56,6 +56,8 @@
 
 [DeepSeek Harness](https://deepseek.com/harness/)（DSH または `dsh`）は、DeepSeek AI が公開しているオープンソースの Agent Harness プロジェクトです。[Cordis](https://github.com/cordiverse/cordis) を基盤とし、**Everything is a Plugin（すべてがプラグイン）**というアーキテクチャを採用しています。モデルアダプター、ツール、Session ログ、インターフェース、Agent Loop は、すべてプラグインツリーを通じて組み合わせたり置き換えたりできます。
 
+現在確認できる公式 Developer Preview の最新版は [`0.1.0-rc.7`](https://github.com/deepseek-ai/deepseek-harness/tree/dsh-v0.1.0-rc.7) です。以下の各プロジェクトに記載した DSH Version は作者が実際に示した開発・テスト基準であり、最新 Preview との互換性を自動的に意味するものではありません。
+
 ### Web UI の起動
 
 [Node.js](https://nodejs.org/) 22.19.x または 24+（24+ を推奨）をインストールしてから、次を実行します。
@@ -194,6 +196,8 @@ Git リポジトリからインストールする場合は、commit を固定し
 - [dsh-record-replay](https://github.com/humblebanana/dsh-record-replay)：macOS デスクトップワークフローを記録して Skill を生成。現在は Xcode Command Line Tools と、別途用意した `open-record-replay` のローカルソースが必要。
 - [dsh-science-workbench](https://github.com/poplarity/dsh-science-workbench)：Cell、図、フィードバック、再実行の系譜を Manifest に記録し、環境 Snapshot と入出力 Hash も保存する再現可能な科学ワークベンチ。MIT、`v0.1.1` で、まだ初期段階。
 - [dsh-omicos](https://github.com/omicverse/dsh-omicos)：OmicOS のバイオインフォマティクス機能を DSH に接続し、永続 Python / R Kernel、Capability Catalog、Background Job、実行状況 View を提供。GPL-3.0-only、npm `0.2.1`。分析 Tool は `permission_mode: full` で動作し、ローカル Kernel を起動する場合がある。Cloud Model と上位 Plan には OmicOS Account が必要。
+- [dsh-crew](https://github.com/ZSeven-W/dsh-crew)：Claude Code または Codex から実際の DSH Worker を Dispatch し、進捗、Status Shard、Tier Policy を提供。MIT、npm `0.1.0-rc.1`。`~/.config/dsh-crew/status.d/` に書き込み、外部 Model Service では API Key が必要になる場合がある。現在の検証対象は DSH `0.1.0-rc.6` のみで、確認できる Test もないため初期段階。
+- [dsh-trading](https://github.com/maddogfinance/dsh-trading)：決定論的 Indicator、CSV Provider、対話型 Chart を備えた取引 Research 向け DSH Workbench。MIT、npm `@dsh-trading/bundle@0.1.0`。注文実行 Interface は公開せず、資金移動 Tool をヒューリスティックに遮断するが、完全な Security Boundary ではないため初期段階。
 
 ### コンテキスト・Session・入力
 
@@ -205,7 +209,8 @@ Git リポジトリからインストールする場合は、commit を固定し
 - [dsh-prompt-studio](https://github.com/Moeblack/dsh-prompt-studio)：システムプロンプト断片を編集し、リアルタイムプレビューを表示。
 - [dsh-turn-rewind](https://github.com/Anionex/dsh-turn-rewind)：永続的な Change Ledger に基づき、会話とワークスペース状態を巻き戻す。
 - [dsh-compaction-instant](https://github.com/KitDoesIt/dsh-compaction-instant)：LLM 要約を決定論的コンパイルに置き換え、`recall` / `search` で圧縮された内容を復元。内蔵 compactor の置換には npm alias が必要で、Runtime への比較的深い変更となる。
-- [dsh-whale-report](https://github.com/SenmuuuuW/dsh-whale-report)：Session Event Log から日次、週次、月次、年次、任意期間の Report を読み取り専用で生成し、Session 履歴は書き換えない。MIT、`v0.2.0` で、まだ初期段階。
+- [toolshrink](https://github.com/unclecode/toolshrink)：Test、Diff、JSON、Directory Tree、Log、Install Output の構造を認識して圧縮し、必要に応じて元の出力への参照を保持。MIT `0.1.0`。現在は Source Build と Global `~/.dsh/cordis.patch.yml` の編集が必要で、保存した原文は 24 時間後に削除されるため初期段階。
+- [dsh-whale-report](https://github.com/SenmuuuuW/dsh-whale-report)：Session Event Log から日次、週次、月次、任意期間の Report を読み取り専用で生成し、`v0.4.0` では DeepTrace、Cost と Balance、Finding、Collaboration、Activity、Resource、Risk、Session Trace を追加。Session 履歴は書き換えず、MIT で、まだ初期段階。
 
 ### ブラウザ・ビジョン・インターフェース
 
@@ -236,6 +241,7 @@ Git リポジトリからインストールする場合は、commit を固定し
 
 ## 外部連携
 
+- [dsh-oomol](https://github.com/oomol-lab/dsh-oomol)：OOMOL Connector を通じて App と Action を段階的に発見し、Schema を確認して接続済み SaaS の機能を実行。MIT、npm `0.1.4`。DSH が保存するのは取り消し可能な OOMOL MCP Key のみで、第三者 OAuth Token は OOMOL 側に残る。Plugin を削除しても Provider Account は切断されず、Action 実行には現時点で Idempotency Key がない。
 - [Ollama](https://github.com/ollama/ollama/blob/main/docs/integrations/deepseek-harness.mdx)：Ollama 公式が提供する起動方法であり、DeepSeek 公式の配布物ではない。`ollama launch dsh` で DSH の導入と起動、Ollama モデル選択、Web 検索設定を行う。独立設定は `~/.ollama/launch/dsh/settings.yaml` に保存され、`~/.dsh/settings.yaml` は変更しない。現在は Developer Preview と明記されている。
 - [Sealos Skills](https://github.com/labring/sealos-skills)：Sealos チームが保守する DSH Profile Bundle。アプリのデプロイ、データベース、オブジェクトストレージなど、8 個のクラウドネイティブ Skill を提供。実際の利用では外部の Sealos Cloud リソースを変更するため、アカウントと関連認証情報が必要。ログイン時には `~/.sealos/kubeconfig` へ書き込み、一部のフローではサンドボックス権限の緩和が必要。`package.json` は MIT を宣言しているが、現在リポジトリのルートに `LICENSE` ファイルはない。
 - [Nowledge Mem](https://mem.nowledge.co/integrations/deepseek-harness)：DSH に Working Memory、プロンプト時の検索、MCP ツール、Session キャプチャを追加。外部製品 Nowledge Mem と `nmem` CLI に依存するため、オープンソースプラグインとは分けて評価するのが適切。
