@@ -136,6 +136,7 @@ Git リポジトリからインストールする場合は、commit を固定し
 | [DeepSeek Harness を解剖する](https://xueai.app/slides/learn.html#dsh-1.html) | インタラクティブなソース解説 | Session、コンテキスト、ツール、サンドボックス、Code Mode、Subagent などの主要メカニズムを解説 |
 | [Cordis は何をしているか：DeepSeek Harness から見る](https://blog.antinomie.org) | 中国語のアーキテクチャ短文 | プラグイン作者の視点から Cordis のメンタルモデルを説明し、複雑さがシステム内部へ移ることを論じる |
 | [DeepSeek Harness ハンドブック](https://github.com/Electricitysheep/dsh-handbook) | 中国語・英語のマニュアル | インストール、プラグイン開発、セキュリティ、コストまで 14 章。オンライン版、PDF、実行可能な例を収録。内容は CC BY-NC-SA 4.0 で、`0.1.0-rc.6` を基準とする |
+| [NanoCordis](https://github.com/SheltonLiu-N/nano-cordis) | 実行可能な学習用実装 | 約 1,600 行の TypeScript で Cordis プラグインフレームワークと DSH 型 Agent Runtime を再構築。MIT、npm `0.1.0`、95 Test。既定の Fake Model は Key 不要で、Bash Tool は承認を求め、実モデルの Credential は環境変数のみから読む |
 
 ### コミュニティでの議論
 
@@ -204,7 +205,9 @@ Git リポジトリからインストールする場合は、commit を固定し
 - [dsh-context-doctor](https://github.com/Zhenyu98/dsh-context-doctor)：AGENTS.md、Skill ディレクトリ、ツール Schema のコンテキスト Token コストと競合を監査。
 - [dsh-memory-evolve](https://github.com/csyangwen/dsh-memory-evolve)：Session をまたぐ記憶、バックグラウンド進化、ブランチ認識機能。
 - [dsh-noema](https://github.com/ZSeven-W/dsh-noema)：ローカル優先の Noema 長期記憶を DSH に接続し、作業前の想起、設定ページでの管理、Codex / Claude Code / Cursor などからの既存記憶インポートに対応。MIT、`0.1.0-rc.1`。DSH `0.1.0-rc.6` で検証済みだが新しいため初期段階。
+- [EverOS Memory for DSH](https://github.com/EverMind-AI/EverOS/tree/main/examples/dsh)：User、Assistant、Tool Call、Tool Result の軌跡をローカル EverOS に保存し、後続 Session 前に想起。Apache-2.0、Plugin `0.1.0`、DSH `>=0.1.0-rc.6 <0.2.0-0` 対応。ただし npm 未公開で、遅延抽出は未 Tag の EverOS 機能に依存する。軌跡には Source、Command、Tool Output が含まれ得るため、外部 Model 設定は別途確認が必要。初期段階。
 - [dsh-at-file](https://github.com/omdsh-dev/dsh-at-file)：入力欄の `@file` でワークスペース内のファイルを検索し、内容を添付。
+- [dsh-shikitor](https://github.com/oneworks-ai/shikitor/tree/master/packages/dsh-shikitor)：Composer で `#` Session、`@` Workspace File、`$` Skill、`/` Command を統合検索し、拡張可能な Workspace File Editor も提供。MIT、npm `1.0.2`、DSH `>=0.1.0-rc.5 <0.2.0` 対応。編集は既定で自動保存され、外観と Path Rule は Browser 側に保存される。
 - [dsh-message-edit](https://github.com/Moeblack/dsh-message-edit)：ブランチ型メッセージ編集、再試行、再生成、バージョンタイムライン。
 - [dsh-prompt-studio](https://github.com/Moeblack/dsh-prompt-studio)：システムプロンプト断片を編集し、リアルタイムプレビューを表示。
 - [dsh-turn-rewind](https://github.com/Anionex/dsh-turn-rewind)：永続的な Change Ledger に基づき、会話とワークスペース状態を巻き戻す。
@@ -233,7 +236,7 @@ Git リポジトリからインストールする場合は、commit を固定し
 
 - [sandbox-micro](https://github.com/omdsh-dev/sandbox-micro)：fail-closed な microsandbox microVM 能力を提供。導入後も Provider とモデル向け Tool は個別に明示有効化するまで無効で、プラットフォーム検査に失敗しても無制限の Host 実行へフォールバックしない。テストディレクトリはあるが正式 Release はなく、`package.json` は BSD-3-Clause を宣言する一方でルートに `LICENSE` ファイルがないため初期段階。
 - [dsh-credentials-keyring](https://github.com/irisnb/dsh-credentials-keyring)：平文 Credential File を Windows Credential Manager、macOS Keychain、Linux Secret Service に置き換え、Secret Service のない Linux では fail closed。MIT `0.1.0` で Memory Backend Test はあるが npm / Release はまだなく、実 OS Keychain の Platform 別 Smoke Test も未完了のため初期段階。
-- [dsh-win32](https://github.com/sjh9714/dsh-win32)：Windows 向けに Sandbox 内で動作する永続 Shell、Minimal Mode、`doctor` 診断を提供。MIT `v0.12.0`、DSH `0.1.0-rc.6` ベース。`SIGTERM`、Pipeline、Background Job の Cleanup を修正し、85 Test と 3 OS Matrix で検証。Windows Console Process は Graceful Termination 失敗後に Force Kill へ進む場合がある。任意 Sandbox は GPLv2 BusyBox を Download し、pnpm がなければ `setup` が Corepack で有効化する。
+- [dsh-win32](https://github.com/sjh9714/dsh-win32)：Windows 向けに Sandbox 内で動作する永続 Shell、Minimal Mode、`doctor` 診断を提供。MIT `v0.14.0`、98 Test と Windows Restricted-token Sandbox CI で検証。現在も DSH `>=0.1.0-rc.5 <0.1.0-rc.7` に限定される。Git Bash Preset は `danger-full-access` が必要で、Sandbox では GPLv2 BusyBox を Download する Variant を使う。Windows Console Process は Graceful Termination 失敗後に Force Kill へ進む場合がある。
 
 ### テーマとスキン
 
@@ -243,6 +246,7 @@ Git リポジトリからインストールする場合は、commit を固定し
 
 - [dsh-oomol](https://github.com/oomol-lab/dsh-oomol)：OOMOL Connector を通じて App と Action を段階的に発見し、Schema を確認して接続済み SaaS の機能を実行。MIT、npm `0.1.4`。DSH が保存するのは取り消し可能な OOMOL MCP Key のみで、第三者 OAuth Token は OOMOL 側に残る。Plugin を削除しても Provider Account は切断されず、Action 実行には現時点で Idempotency Key がない。
 - [Ollama](https://github.com/ollama/ollama/blob/main/docs/integrations/deepseek-harness.mdx)：Ollama 公式が提供する起動方法であり、DeepSeek 公式の配布物ではない。`ollama launch dsh` で DSH の導入と起動、Ollama モデル選択、Web 検索設定を行う。独立設定は `~/.ollama/launch/dsh/settings.yaml` に保存され、`~/.dsh/settings.yaml` は変更しない。現在は Developer Preview と明記されている。
+- [Rapid-MLX DSH Provider](https://github.com/raullenchai/rapid-mlx-dsh-provider)：ローカル Rapid-MLX の `/v1/models` から Model 能力、Reasoning Mode、Context Window を読み、DSH Provider Metadata の手入力を不要にする。Apache-2.0、DSH `0.1.0-rc.7` で End-to-end 検証済みかつ Protocol Test 付きだが、意図的に未公開の Source Install のため初期段階。既定接続は Loopback のみで、Rapid-MLX は別途起動が必要。画像入力は明示的に拒否する。
 - [Sealos Skills](https://github.com/labring/sealos-skills)：Sealos チームが保守する DSH Profile Bundle。アプリのデプロイ、データベース、オブジェクトストレージなど、8 個のクラウドネイティブ Skill を提供。実際の利用では外部の Sealos Cloud リソースを変更するため、アカウントと関連認証情報が必要。ログイン時には `~/.sealos/kubeconfig` へ書き込み、一部のフローではサンドボックス権限の緩和が必要。`package.json` は MIT を宣言しているが、現在リポジトリのルートに `LICENSE` ファイルはない。
 - [Nowledge Mem](https://mem.nowledge.co/integrations/deepseek-harness)：DSH に Working Memory、プロンプト時の検索、MCP ツール、Session キャプチャを追加。外部製品 Nowledge Mem と `nmem` CLI に依存するため、オープンソースプラグインとは分けて評価するのが適切。
 - [Open Design](https://github.com/nexu-io/open-design)：構造化 Streaming、モデル検出、Cancel、Session 再開に対応する DSH ネイティブ Runtime Adapter を備えた Local-first のオープンソースデザインアプリ。Apache-2.0 で、通常のプラグインではなく大規模な独立製品。
@@ -251,22 +255,25 @@ Git リポジトリからインストールする場合は、commit を固定し
 - [dsh-lark](https://github.com/sugarforever/dsh-lark)：公式 Node SDK と WebSocket 長接続で DSH を Feishu / Lark に接続し、Public Callback Endpoint は不要。MIT、npm / GitHub `v0.1.1`。既定では Message Scope 3 項目のみを要求し、Credential は Environment Variable から読む。実行時は Bot として外部 Message を受信・送信する。
 - [dsh-qqbot](https://github.com/tencent-connect/dsh-qqbot)：Tencent が管理する QQ Bot プラグイン。QR Code 連携、Private/Group Session の分離、再起動後の復元に対応。MIT、`0.1.0` で、連携時に認証情報をローカル Profile へ保存する。
 - [LoongSuite DSH Plugin](https://github.com/loongsuite/dsh-plugin)：Agent Turn、Model Call、Tool 実行、Token 使用量を OpenTelemetry GenAI Trace に変換し、Jaeger、Tempo、SigNoz、Langfuse などの OTLP Backend へ送信する。Apache-2.0、Beta で、DSH `0.1.0-rc.6` の Headless / Web Profile で検証済み。Content Capture は既定で無効だが、有効化すると Source Code、Credential、個人情報が外部へ送られる可能性がある。
+- [Tencent Cloud Agent Observability for DSH](https://github.com/TencentCloud/tencentcloud-agentobs-sdk-dsh)：Tencent Cloud チーム保守の CLS 直送 Observability Plugin。OTLP Collector なしで Session、Agent Loop、Model Stream、Tool Lifecycle を 5 層 Trace に変換する。Apache-2.0、npm / Release `0.0.1`、DSH `>=0.1.0-rc.6 <0.2.0` 対応。非常に新しいため初期段階。Prompt、Response、Tool Argument / Result の Capture は既定で有効なので、機密 Repository では `captureContent` を無効化し、最小権限と Retention を設定する。
 - [dsh-wakatime](https://github.com/dingyi222666/dsh-wakatime)：DSH の File Activity、AI Line Change、Project Time を WakaTime へ送信。MIT、npm `0.1.1`。Test はあるが新しいため初期段階。WakaTime API Key が必要で、`~/.wakatime/dsh-wakatime/` に State を書き、CLI がなければ `wakatime-cli` を自動 Download / Update する。
 
 ## 開発ツール
 
 - [dsh-plugin-check](https://github.com/omdsh-dev/dsh-plugin-check)：Manifest、Patch、ビルド上の落とし穴、ディレクトリ掲載状況を検査。
+- [DShScan](https://github.com/shaoshi20/dshscan)：DSH Plugin に Rule Evidence、Risk Score、Install Advice を生成。Local Content は Offline Scan でき、明示操作で GitHub / npm Source 取得、`npm audit`、外部 LLM 呼び出しも可能。MIT、npm / Release `0.3.0`、DSH 固有 Rule の CI / Test 付きだが DSH `0.1.0-rc.6` 固定で同日中の更新が速いため初期段階。Low-risk 判定は Security Audit ではない。
 - [dsh-fail-logger](https://github.com/Areium/dsh-fail-logger)：ツール失敗を秘匿化、重複排除、分類し、機械管理の Skill 記録へ蓄積。問題を記録するだけで、挙動を自動変更しない。
+- [dsh-session-surgeon](https://github.com/xiaoshenming/dsh-session-surgeon)：Load 不能、Sequence Gap、残存 Temp File のある DSH Session を Scan、Inspect、Export、Repair。MIT `v0.1.0`、DSH `0.1.0-rc.6` 対応で GitHub Source から Install するため初期段階。Repair は既定で dry-run、`--apply` は先に `.bak.<utc>` を書き、Export は `--no-redact` で明示解除しない限り既定で Redact する。
 - [deepseek-harness-action](https://github.com/Lixiaoyiao/deepseek-harness-action)：GitHub Actions 上で DSH による PR Review、CI 診断、自動修正、Issue → PR を実行。書き込み権限はデフォルトで無効で、検証は認証情報を持たないコンテナで行う。
 - [Awesome DSH Plugins Radar](https://github.com/AdamPlatin123/awesome-dsh-plugins)：発見、静的、Compile、Runtime の信号を分離して表示する自動互換性レーダー。MIT、データ変動が速く Release もなく、「Runtime で利用可能」は Security Audit や品質保証ではないため初期段階。
-- [dsh-market](https://github.com/dsh-market/dsh-market)：`awesome-dsh-plugin` 掲載プロジェクトを DSH 内で閲覧、検索、インストール、更新、削除できるプラグインマーケット。MIT、`v1.9.0`。Build Script は既定で遮断され、Install Endpoint は Same-origin POST のみを受け付けるが、ディレクトリ掲載は安全性の保証ではない。
+- [dsh-market](https://github.com/dsh-market/dsh-market)：`awesome-dsh-plugin` 掲載プロジェクトを DSH 内で閲覧、検索、インストール、更新、削除できるプラグインマーケット。MIT、`v1.14.1`。Build Script は既定で遮断され、Install Endpoint は Same-origin POST のみ。Agent 実行中は Update を防ぎ、失敗時も次回起動可能な状態を保つが、ディレクトリ掲載は安全性の保証ではない。
 - [dsh-suite](https://whyihaveyou.github.io/dsh-suite/)：中国語・英語対応の DSH エコシステム索引。プラグイン検索、`create-dsh-plugin` スキャフォールダー、基本的な互換性メタデータを提供。Catalog は毎時更新され、収録パッケージを一時 Profile へ毎日インストールして互換性を確認する。インストール成功は Security Audit や品質保証ではない。
 - [deepseek-harness-plugin-mcp](https://github.com/bobleer/deepseek-harness-plugin-mcp)：他の Agent が MCP 経由で DSH プラグインを発見、検査、インストール、呼び出し可能にする。インストールと Runtime はデフォルトで無効で、`--allow-install` / `--allow-runtime` を明示的に有効化した場合のみ、それぞれの副作用が発生する。
 - [dsh-payload-capture](https://github.com/Moeblack/dsh-payload-capture)：モデル API へ送信する Payload を取得・保存し、リクエスト組み立てのデバッグに利用。
 - [dsh-custom-tool](https://github.com/omdsh-dev/dsh-custom-tool)：Monaco エディターでサンドボックス化された JavaScript ツールを作成・管理。
 - [dsh-open-in-vscode](https://github.com/omdsh-dev/dsh-open-in-vscode)：Web UI から現在のワークスペースを VS Code で直接開く。
 - [dsh-movein](https://github.com/sjh9714/dsh-movein)：1 コマンドで Claude Code の Skill、MCP、hooks、グローバル指示を DSH へ移行。デフォルトはドライラン。`CLAUDE.md` は DSH がネイティブに読み、Session 履歴は対象外。MIT。DSH `0.1.0-rc.6` で検証済みだが新しいため初期段階。
-- [dshpack](https://github.com/hili986/dshpack)：Skill、MCP、Profile Patch、Permission Default を Install・共有・監査可能な DSH Profile に Package 化。Build Script は既定で拒否し、dry-run、Source Pin、Credential Scan、Transaction Rollback を備える。MIT、M0 Prerelease、npm 未公開で `init` / `pack` も未実装のため初期段階。
+- [dshpack](https://github.com/hili986/dshpack)：Skill、MCP、Profile Patch、Permission Default を Install・共有・監査可能な DSH Profile に Package 化。Build Script は既定で拒否し、dry-run、Source Pin、Credential Scan、Transaction Rollback を備える。MIT、npm `0.1.1`。M0 Format はまだ Prerelease で `init` / `pack` も未実装のため初期段階。
 - [hooks-adapter](https://github.com/JohnXu22786/hooks-adapter)：Claude Code、Codex、OpenCode の hooks Config を DSH で直接再利用し、Shell、Webhook、LLM、Subagent Handler を提供。MIT、Repository は 111 Test を示すが Release はまだない。自動検出した hooks は Command 実行や Data 送信が可能なため初期段階。
 
 ## 謝辞
