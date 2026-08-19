@@ -136,6 +136,7 @@ dsh --profile web --dump-config
 | [解剖 DeepSeek Harness](https://xueai.app/slides/learn.html#dsh-1.html)                      | 交互式源码专题  | 拆解会话、上下文、工具、沙箱、Code Mode 和 Subagent 等核心机制                   |
 | [Cordis 在做什么：从 DeepSeek Harness 看](https://blog.antinomie.org)                        | 中文架构短文    | 从插件作者视角解释 Cordis 心智模型，讨论复杂度如何转移到系统内部                 |
 | [DeepSeek Harness 白皮书](https://github.com/Electricitysheep/dsh-handbook)                  | 中英双语手册    | 14 章覆盖安装、插件开发、安全与成本，提供在线阅读、PDF 和可运行示例；内容采用 CC BY-NC-SA 4.0，基于 `0.1.0-rc.6` |
+| [NanoCordis](https://github.com/SheltonLiu-N/nano-cordis)                                    | 可运行的教学实现 | 用约 1,600 行 TypeScript 重建 Cordis 插件框架与 DSH 形态的 Agent Runtime；MIT、npm `0.1.0`、95 项测试，默认 Fake Model 无需 Key，Bash 工具仍需人工批准，真实模型凭据只从环境变量读取 |
 
 ### 社区讨论
 
@@ -204,7 +205,9 @@ dsh --profile web --dump-config
 - [dsh-context-doctor](https://github.com/Zhenyu98/dsh-context-doctor)：审计 AGENTS.md、Skill 目录和工具 Schema 的上下文 Token 成本与冲突。
 - [dsh-memory-evolve](https://github.com/csyangwen/dsh-memory-evolve)：跨会话记忆、后台演进和分支感知能力。
 - [dsh-noema](https://github.com/ZSeven-W/dsh-noema)：为 DSH 接入本地优先的 Noema 长期记忆，支持工作前召回、设置页管理和从 Codex、Claude Code、Cursor 等导入已有记忆；MIT、`0.1.0-rc.1`，已在 DSH `0.1.0-rc.6` 验证，项目仍新，标注为早期。
+- [EverOS Memory for DSH](https://github.com/EverMind-AI/EverOS/tree/main/examples/dsh)：把用户、助手、工具调用和结果轨迹写入本地 EverOS，并在后续会话开始前召回；Apache-2.0，插件 `0.1.0` 支持 DSH `>=0.1.0-rc.6 <0.2.0-0`，但尚未发布 npm，延迟提取还依赖未进入标签版的 EverOS 能力。轨迹可能含源码、命令和工具输出，外部模型配置需单独审查，标注为早期。
 - [dsh-at-file](https://github.com/omdsh-dev/dsh-at-file)：在输入框中通过 `@file` 搜索工作区文件并附加内容。
+- [dsh-shikitor](https://github.com/oneworks-ai/shikitor/tree/master/packages/dsh-shikitor)：在输入区统一发现 `#` 会话、`@` 工作区文件、`$` Skill 和 `/` 命令，并提供可扩展的工作区文件编辑器；MIT、npm `1.0.2`，支持 DSH `>=0.1.0-rc.5 <0.2.0`。编辑默认自动保存，外观与路径规则保存在浏览器侧。
 - [dsh-message-edit](https://github.com/Moeblack/dsh-message-edit)：分支式消息编辑、重试、重新生成和版本时间线。
 - [dsh-prompt-studio](https://github.com/Moeblack/dsh-prompt-studio)：编辑系统提示词片段并提供实时预览。
 - [dsh-turn-rewind](https://github.com/Anionex/dsh-turn-rewind)：基于持久 Change Ledger 回退对话和工作区状态。
@@ -233,7 +236,7 @@ dsh --profile web --dump-config
 
 - [sandbox-micro](https://github.com/omdsh-dev/sandbox-micro)：提供 fail-closed 的 microsandbox microVM 能力；安装后 Provider 与模型工具均默认关闭，必须分别显式启用，平台检查失败时不会降级为无约束宿主执行。含测试目录但尚无正式 Release；`package.json` 声明 BSD-3-Clause，但仓库根目录没有 `LICENSE` 文件，标注为早期。
 - [dsh-credentials-keyring](https://github.com/irisnb/dsh-credentials-keyring)：用 Windows Credential Manager、macOS Keychain 或 Linux Secret Service 替代明文凭据文件，并在无 Secret Service 的 Linux 上 fail closed；MIT、`0.1.0`，有内存后端测试但尚无 npm / Release，真实系统钥匙串仍待逐平台烟测，标注为早期。
-- [dsh-win32](https://github.com/sjh9714/dsh-win32)：为 Windows 提供沙箱内可运行的持久 Shell、极简模式和 `doctor` 体检；MIT、`v0.12.0`，基于 DSH `0.1.0-rc.6`，现已修复 `SIGTERM`、管道和后台任务清理，并以 85 项测试和三系统矩阵验证。Windows 控制台进程在优雅终止失败后可能升级为强制终止；可选沙箱还会下载 GPLv2 BusyBox，缺少 pnpm 时 `setup` 会通过 Corepack 启用。
+- [dsh-win32](https://github.com/sjh9714/dsh-win32)：为 Windows 提供沙箱内可运行的持久 Shell、极简模式和 `doctor` 体检；MIT、`v0.14.0`，以 98 项测试和 Windows 受限令牌沙箱 CI 验证。当前仍限制 DSH `>=0.1.0-rc.5 <0.1.0-rc.7`；Git Bash 预设需要 `danger-full-access`，沙箱内应使用会下载 GPLv2 BusyBox 的变体，Windows 控制台进程在优雅终止失败后可能升级为强制终止。
 
 ### 主题与皮肤
 
@@ -243,6 +246,7 @@ dsh --profile web --dump-config
 
 - [dsh-oomol](https://github.com/oomol-lab/dsh-oomol)：通过 OOMOL Connector 渐进式发现应用和 Action、检查 Schema 并执行已连接的 SaaS 能力；MIT、npm `0.1.4`。DSH 只保存可撤销的 OOMOL MCP Key，第三方 OAuth Token 留在 OOMOL；卸载插件不会自动断开第三方账户，Action 执行目前也没有幂等键。
 - [Ollama](https://github.com/ollama/ollama/blob/main/docs/integrations/deepseek-harness.mdx)：Ollama 官方提供的启动方式，不是 DeepSeek 官方发行包。通过 `ollama launch dsh` 安装并启动 DSH、选择 Ollama 模型和配置 Web 搜索；独立设置写入 `~/.ollama/launch/dsh/settings.yaml`，不会改动 `~/.dsh/settings.yaml`。当前标注为开发者预览。
+- [Rapid-MLX DSH Provider](https://github.com/raullenchai/rapid-mlx-dsh-provider)：从本机 Rapid-MLX 的 `/v1/models` 读取模型能力、推理模式和上下文窗口，避免手写 DSH Provider 元数据；Apache-2.0，已在 DSH `0.1.0-rc.7` 端到端验证并含协议测试，但故意保持未发布的源码安装，标注为早期。仅连接默认回环地址，仍需单独运行 Rapid-MLX；图像输入会明确拒绝。
 - [Sealos Skills](https://github.com/labring/sealos-skills)：由 Sealos 团队维护的 DSH Profile Bundle，提供应用部署、数据库、对象存储等八个云原生 Skills；实际使用会操作外部 Sealos Cloud 资源，需要账号与相关凭据，登录会写入 `~/.sealos/kubeconfig`，部分流程需放宽沙箱权限。`package.json` 声明 MIT，但仓库根目录当前缺少 `LICENSE` 文件。
 - [Nowledge Mem](https://mem.nowledge.co/integrations/deepseek-harness)：为 DSH 提供 Working Memory、提示时检索、MCP 工具和会话捕获；依赖外部 Nowledge Mem 产品与 `nmem` CLI，适合与开源插件分开评估。
 - [Open Design](https://github.com/nexu-io/open-design)：本地优先的开源设计应用，通过原生 DSH Runtime 适配提供结构化流式输出、模型发现、取消和会话恢复；Apache-2.0，属于大型独立产品而非普通插件。
@@ -251,22 +255,25 @@ dsh --profile web --dump-config
 - [dsh-lark](https://github.com/sugarforever/dsh-lark)：使用飞书官方 Node SDK 和 WebSocket 长连接把 DSH 接入飞书 / Lark，无需公网回调；MIT、npm / GitHub `v0.1.1`。默认只申请三项消息权限，凭据从环境变量读取；实际运行会接收并以机器人身份发送外部消息。
 - [dsh-qqbot](https://github.com/tencent-connect/dsh-qqbot)：腾讯团队维护的 QQ Bot 插件，支持扫码绑定、私聊与群聊会话隔离及重启恢复；MIT、`0.1.0`，绑定过程会把凭据保存到本地 Profile。
 - [LoongSuite DSH Plugin](https://github.com/loongsuite/dsh-plugin)：把 Agent Turn、模型调用、工具执行和 Token 使用转成 OpenTelemetry GenAI Trace，可发送到 Jaeger、Tempo、SigNoz、Langfuse 等 OTLP 后端；Apache-2.0、Beta，已在 DSH `0.1.0-rc.6` 的 Headless 与 Web Profile 验证。内容采集默认关闭，启用后可能外发源码、凭据和个人数据。
+- [Tencent Cloud Agent Observability for DSH](https://github.com/TencentCloud/tencentcloud-agentobs-sdk-dsh)：腾讯云团队维护的 CLS 直传可观测插件，无需 OTLP Collector，把 Session、Agent Loop、模型流和工具生命周期映射为五层 Trace；Apache-2.0、npm / Release `0.0.1`，支持 DSH `>=0.1.0-rc.6 <0.2.0`，项目很新，标注为早期。默认会把 Prompt、Response 和工具参数/结果发送到 CLS，处理敏感仓库前应关闭 `captureContent` 并配置最小权限与保留策略。
 - [dsh-wakatime](https://github.com/dingyi222666/dsh-wakatime)：把 DSH 文件操作、AI 代码行数和项目耗时上报到 WakaTime；MIT、npm `0.1.1`，有测试但项目仍新，标注为早期。需要 WakaTime API Key，会写入 `~/.wakatime/dsh-wakatime/` 并在缺少 CLI 时自动下载或更新 `wakatime-cli`。
 
 ## 开发工具
 
 - [dsh-plugin-check](https://github.com/omdsh-dev/dsh-plugin-check)：检查 Manifest、Patch、构建陷阱和目录收录状态。
+- [DShScan](https://github.com/shaoshi20/dshscan)：为 DSH 插件生成规则证据、风险分和安装建议，可离线扫描本地内容，也可显式联网抓取 GitHub / npm 源码、调用 `npm audit` 或外部 LLM；MIT、npm / Release `0.3.0`，CI 和测试已覆盖 DSH 特有规则，但仅固定兼容 DSH `0.1.0-rc.6` 且同日快速迭代，标注为早期。低风险结论不等于安全审计。
 - [dsh-fail-logger](https://github.com/Areium/dsh-fail-logger)：脱敏、去重并分类记录工具失败，将机器维护的实录沉淀进 Skill；只记录问题，不自动修改行为。
+- [dsh-session-surgeon](https://github.com/xiaoshenming/dsh-session-surgeon)：扫描、检查、导出并修复无法加载、序列断裂或残留临时文件的 DSH 会话；MIT、`v0.1.0`，支持 DSH `0.1.0-rc.6` 并从 GitHub 源码安装，标注为早期。修复默认 dry-run，`--apply` 会先写 `.bak.<utc>`；导出默认脱敏，`--no-redact` 会显式关闭保护。
 - [deepseek-harness-action](https://github.com/Lixiaoyiao/deepseek-harness-action)：在 GitHub Actions 中使用 DSH 做 PR Review、CI 诊断、自动修复和 Issue → PR；写权限默认关闭，并将验证放在无凭据容器中运行。
 - [Awesome DSH Plugins Radar](https://github.com/AdamPlatin123/awesome-dsh-plugins)：自动扫描并分别展示发现、静态、编译和运行级信号的兼容性雷达；MIT、数据高速变化且尚无 Release，“运行可用”不等于安全审计或内容质量，标注为早期。
-- [dsh-market](https://github.com/dsh-market/dsh-market)：DSH 内置插件市场，可浏览、搜索、安装、更新和卸载登记在 `awesome-dsh-plugin` 的项目；MIT、`v1.9.0`。构建脚本默认阻止，安装端点仅接受同源 POST，但目录收录不代表安全背书。
+- [dsh-market](https://github.com/dsh-market/dsh-market)：DSH 内置插件市场，可浏览、搜索、安装、更新和卸载登记在 `awesome-dsh-plugin` 的项目；MIT、`v1.14.1`。构建脚本默认阻止，安装端点仅接受同源 POST，更新期间会阻止 Agent 运行并在失败时保留可启动状态，但目录收录仍不代表安全背书。
 - [dsh-suite](https://whyihaveyou.github.io/dsh-suite/zh.html)：中英双语 DSH 生态索引，提供插件搜索、`create-dsh-plugin` 脚手架和基础兼容性元数据；目录每小时刷新，并每天把收录包安装到临时 Profile 做兼容性检查。安装成功不等于安全审计或质量保证。
 - [deepseek-harness-plugin-mcp](https://github.com/bobleer/deepseek-harness-plugin-mcp)：让其他 Agent 通过 MCP 发现、检查、安装和调用 DSH 插件；安装与运行默认关闭，只有显式启用 `--allow-install` / `--allow-runtime` 才会产生对应副作用。
 - [dsh-payload-capture](https://github.com/Moeblack/dsh-payload-capture)：捕获并落盘上行模型 API Payload，便于调试请求组装。
 - [dsh-custom-tool](https://github.com/omdsh-dev/dsh-custom-tool)：通过 Monaco 编辑器创建和管理沙箱化 JavaScript 工具。
 - [dsh-open-in-vscode](https://github.com/omdsh-dev/dsh-open-in-vscode)：从 Web UI 直接在 VS Code 中打开当前工作区。
 - [dsh-movein](https://github.com/sjh9714/dsh-movein)：一条命令把 Claude Code 的 Skills、MCP、hooks 和全局指令迁入 DSH；默认预演，`CLAUDE.md` 由 DSH 原生读取，会话历史不在范围内。MIT，已在 DSH `0.1.0-rc.6` 验证，项目仍新，标注为早期。
-- [dshpack](https://github.com/hili986/dshpack)：把 Skills、MCP、Profile Patch 和权限默认值打包成可安装、可分享、可审计的 DSH Profile；默认拒绝构建脚本，支持 dry-run、固定来源、凭据扫描和事务回滚。MIT、M0 预发布，尚无 npm，`init` / `pack` 仍未实现，标注为早期。
+- [dshpack](https://github.com/hili986/dshpack)：把 Skills、MCP、Profile Patch 和权限默认值打包成可安装、可分享、可审计的 DSH Profile；默认拒绝构建脚本，支持 dry-run、固定来源、凭据扫描和事务回滚。MIT、npm `0.1.1`，M0 格式仍属预发布，`init` / `pack` 尚未实现，标注为早期。
 - [hooks-adapter](https://github.com/JohnXu22786/hooks-adapter)：让 DSH 直接复用 Claude Code、Codex 和 OpenCode 的 hooks 配置，并提供 Shell、Webhook、LLM 与子 Agent Handler；MIT、仓库声明 111 项测试但尚无 Release，自动发现的 hooks 可执行命令和外发数据，标注为早期。
 
 ## 致谢
