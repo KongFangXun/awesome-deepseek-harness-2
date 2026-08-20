@@ -56,7 +56,7 @@
 
 [DeepSeek Harness](https://deepseek.com/harness/)（DSH または `dsh`）は、DeepSeek AI が公開しているオープンソースの Agent Harness プロジェクトです。[Cordis](https://github.com/cordiverse/cordis) を基盤とし、**Everything is a Plugin（すべてがプラグイン）**というアーキテクチャを採用しています。モデルアダプター、ツール、Session ログ、インターフェース、Agent Loop は、すべてプラグインツリーを通じて組み合わせたり置き換えたりできます。
 
-現在確認できる公式 Developer Preview の最新版は [`0.1.0-rc.7`](https://github.com/deepseek-ai/deepseek-harness/tree/dsh-v0.1.0-rc.7) です。以下の各プロジェクトに記載した DSH Version は作者が実際に示した開発・テスト基準であり、最新 Preview との互換性を自動的に意味するものではありません。
+現在確認できる公式 Developer Preview の最新版は [`0.1.0-rc.8`](https://github.com/deepseek-ai/deepseek-harness/tree/dsh-v0.1.0-rc.8) です。以下の各プロジェクトに記載した DSH Version は作者が実際に示した開発・テスト基準であり、最新 Preview との互換性を自動的に意味するものではありません。
 
 ### Web UI の起動
 
@@ -209,6 +209,7 @@ Git リポジトリからインストールする場合は、commit を固定し
 - [dsh-at-file](https://github.com/omdsh-dev/dsh-at-file)：入力欄の `@file` でワークスペース内のファイルを検索し、内容を添付。
 - [dsh-shikitor](https://github.com/oneworks-ai/shikitor/tree/master/packages/dsh-shikitor)：Composer で `#` Session、`@` Workspace File、`$` Skill、`/` Command を統合検索し、拡張可能な Workspace File Editor も提供。MIT、npm `1.0.2`、DSH `>=0.1.0-rc.5 <0.2.0` 対応。編集は既定で自動保存され、外観と Path Rule は Browser 側に保存される。
 - [dsh-message-edit](https://github.com/Moeblack/dsh-message-edit)：ブランチ型メッセージ編集、再試行、再生成、バージョンタイムライン。
+- [dsh-client-auto-retry](https://github.com/Frog755/dsh-client-auto-retry)：`error`、`interrupted`、`max-tokens` の後に既定メッセージ `继续` を元の Session へ自動送信し、猶予時間、クールダウン、連続回数上限で再試行を制御。MIT、npm `0.3.1`、互換性表明は DSH `0.1.0-rc.7` のみ。既定では起動時に直近 15 分の中断 Session を走査し、モデル呼び出しと Token 消費を継続する可能性がある。確認できる Test や Release がないため初期段階。
 - [dsh-prompt-studio](https://github.com/Moeblack/dsh-prompt-studio)：システムプロンプト断片を編集し、リアルタイムプレビューを表示。
 - [dsh-turn-rewind](https://github.com/Anionex/dsh-turn-rewind)：永続的な Change Ledger に基づき、会話とワークスペース状態を巻き戻す。
 - [dsh-compaction-instant](https://github.com/KitDoesIt/dsh-compaction-instant)：LLM 要約を決定論的コンパイルに置き換え、`recall` / `search` で圧縮された内容を復元。内蔵 compactor の置換には npm alias が必要で、Runtime への比較的深い変更となる。
@@ -237,6 +238,7 @@ Git リポジトリからインストールする場合は、commit を固定し
 - [sandbox-micro](https://github.com/omdsh-dev/sandbox-micro)：fail-closed な microsandbox microVM 能力を提供。導入後も Provider とモデル向け Tool は個別に明示有効化するまで無効で、プラットフォーム検査に失敗しても無制限の Host 実行へフォールバックしない。テストディレクトリはあるが正式 Release はなく、`package.json` は BSD-3-Clause を宣言する一方でルートに `LICENSE` ファイルがないため初期段階。
 - [dsh-credentials-keyring](https://github.com/irisnb/dsh-credentials-keyring)：平文 Credential File を Windows Credential Manager、macOS Keychain、Linux Secret Service に置き換え、Secret Service のない Linux では fail closed。MIT `0.1.0` で Memory Backend Test はあるが npm / Release はまだなく、実 OS Keychain の Platform 別 Smoke Test も未完了のため初期段階。
 - [dsh-win32](https://github.com/sjh9714/dsh-win32)：Windows 向けに Sandbox 内で動作する永続 Shell、Minimal Mode、`doctor` 診断を提供。MIT `v0.14.0`、98 Test と Windows Restricted-token Sandbox CI で検証。現在も DSH `>=0.1.0-rc.5 <0.1.0-rc.7` に限定される。Git Bash Preset は `danger-full-access` が必要で、Sandbox では GPLv2 BusyBox を Download する Variant を使う。Windows Console Process は Graceful Termination 失敗後に Force Kill へ進む場合がある。
+- [dsh-exec-extension](https://github.com/LvDAO/dsh-exec-extension)：Headless Profile に単発 Exec CLI を追加し、stdin、`@file`、作業ディレクトリ、モデル、Timeout、JSONL 出力、Permission Mode を呼び出しごとの Flag として提供。MIT `v0.1.0`、DSH `0.1.0-rc.7` と Node.js 22.19+ に固定され、Node / Rust Test と CI がある。既定は `workspace-write` のままで、UI のない `--approval ask` は fail closed。`--full-auto` / `--yolo` は自動承認し、Sandbox を解除するのは明示的な `--sandbox danger-full-access` のみ。現在は固定 Git Tag から導入し、Git 依存の `prepare` は Agent Sandbox 外で動くため、事前確認と明示許可が必要。
 
 ### テーマとスキン
 
@@ -261,12 +263,12 @@ Git リポジトリからインストールする場合は、commit を固定し
 ## 開発ツール
 
 - [dsh-plugin-check](https://github.com/omdsh-dev/dsh-plugin-check)：Manifest、Patch、ビルド上の落とし穴、ディレクトリ掲載状況を検査。
-- [DShScan](https://github.com/shaoshi20/dshscan)：DSH Plugin に Rule Evidence、Risk Score、Install Advice を生成。Local Content は Offline Scan でき、明示操作で GitHub / npm Source 取得、`npm audit`、外部 LLM 呼び出しも可能。MIT、npm / Release `0.3.0`、DSH 固有 Rule の CI / Test 付きだが DSH `0.1.0-rc.6` 固定で同日中の更新が速いため初期段階。Low-risk 判定は Security Audit ではない。
+- [DShScan](https://github.com/shaoshi20/dshscan)：DSH Plugin に Rule Evidence、Risk Score、Install Advice を生成。Local Content は Offline Scan でき、明示操作で GitHub / npm Source 取得、`npm audit`、外部 LLM 呼び出しも可能。MIT、npm / Release `0.3.2`、DSH 固有 Rule の CI / Test 付きだが DSH `0.1.0-rc.6` 固定で同日中の更新が速いため初期段階。Low-risk 判定は Security Audit ではない。
 - [dsh-fail-logger](https://github.com/Areium/dsh-fail-logger)：ツール失敗を秘匿化、重複排除、分類し、機械管理の Skill 記録へ蓄積。問題を記録するだけで、挙動を自動変更しない。
 - [dsh-session-surgeon](https://github.com/xiaoshenming/dsh-session-surgeon)：Load 不能、Sequence Gap、残存 Temp File のある DSH Session を Scan、Inspect、Export、Repair。MIT `v0.1.0`、DSH `0.1.0-rc.6` 対応で GitHub Source から Install するため初期段階。Repair は既定で dry-run、`--apply` は先に `.bak.<utc>` を書き、Export は `--no-redact` で明示解除しない限り既定で Redact する。
 - [deepseek-harness-action](https://github.com/Lixiaoyiao/deepseek-harness-action)：GitHub Actions 上で DSH による PR Review、CI 診断、自動修正、Issue → PR を実行。書き込み権限はデフォルトで無効で、検証は認証情報を持たないコンテナで行う。
 - [Awesome DSH Plugins Radar](https://github.com/AdamPlatin123/awesome-dsh-plugins)：発見、静的、Compile、Runtime の信号を分離して表示する自動互換性レーダー。MIT、データ変動が速く Release もなく、「Runtime で利用可能」は Security Audit や品質保証ではないため初期段階。
-- [dsh-market](https://github.com/dsh-market/dsh-market)：`awesome-dsh-plugin` 掲載プロジェクトを DSH 内で閲覧、検索、インストール、更新、削除できるプラグインマーケット。MIT、`v1.14.1`。Build Script は既定で遮断され、Install Endpoint は Same-origin POST のみ。Agent 実行中は Update を防ぎ、失敗時も次回起動可能な状態を保つが、ディレクトリ掲載は安全性の保証ではない。
+- [dsh-market](https://github.com/dsh-market/dsh-market)：`awesome-dsh-plugin` 掲載プロジェクトを DSH 内で閲覧、検索、インストール、更新、削除できるプラグインマーケット。MIT、`v1.15.0`。インストール / 更新後の Profile 互換性検査と単一 Plugin のワンクリック Rollback を追加した。Build Script は既定で遮断され、Install Endpoint は Same-origin POST のみ。Agent 実行中は Update を防ぎ、失敗時も次回起動可能な状態を保つが、ディレクトリ掲載は安全性の保証ではない。
 - [dsh-suite](https://whyihaveyou.github.io/dsh-suite/)：中国語・英語対応の DSH エコシステム索引。プラグイン検索、`create-dsh-plugin` スキャフォールダー、基本的な互換性メタデータを提供。Catalog は毎時更新され、収録パッケージを一時 Profile へ毎日インストールして互換性を確認する。インストール成功は Security Audit や品質保証ではない。
 - [deepseek-harness-plugin-mcp](https://github.com/bobleer/deepseek-harness-plugin-mcp)：他の Agent が MCP 経由で DSH プラグインを発見、検査、インストール、呼び出し可能にする。インストールと Runtime はデフォルトで無効で、`--allow-install` / `--allow-runtime` を明示的に有効化した場合のみ、それぞれの副作用が発生する。
 - [dsh-payload-capture](https://github.com/Moeblack/dsh-payload-capture)：モデル API へ送信する Payload を取得・保存し、リクエスト組み立てのデバッグに利用。
