@@ -202,10 +202,10 @@ dsh --profile web --dump-config
 
 ### 上下文、会话与输入
 
-- [dsh-context](https://github.com/bowenliang123/dsh-context)：在 Web UI 的 Context 面板和 `/context` 命令中，按请求展示 System Prompt、工具 Schema、消息、注入、回复和工具结果的 Token 组成，并标出压缩、剪枝与缓存命中；Apache-2.0、npm / Release `0.17.0`，以 DSH `0.1.0-rc.8` 依赖构建并含 Host、Client 测试。无需外部服务，但 UI 会每小时至多一次查询 npm 最新版本。
+- [dsh-context](https://github.com/bowenliang123/dsh-context)：在 Web UI 的 Context 面板和 `/context` 命令中，按请求展示 System Prompt、工具 Schema、消息、注入、回复和工具结果的 Token 组成，并标出压缩、剪枝与缓存命中；Apache-2.0、npm / Release `0.19.2`，将 DSH Peer 依赖兼容范围扩至 `^0.1.0-rc.7`，并含 Host、Client 测试。无需外部服务，但 UI 会每小时至多一次查询 npm 最新版本。
 - [dsh-context-doctor](https://github.com/Zhenyu98/dsh-context-doctor)：审计 AGENTS.md、Skill 目录和工具 Schema 的上下文 Token 成本与冲突。
 - [dsh-memory-evolve](https://github.com/csyangwen/dsh-memory-evolve)：跨会话记忆、后台演进和分支感知能力。
-- [dsh-noema](https://github.com/ZSeven-W/dsh-noema)：为 DSH 接入本地优先的 Noema 长期记忆，支持工作前召回、设置页管理和从 Codex、Claude Code、Cursor 等导入已有记忆；MIT、`0.1.0-rc.1`，已在 DSH `0.1.0-rc.6` 验证，项目仍新，标注为早期。
+- [dsh-noema](https://github.com/ZSeven-W/dsh-noema)：为 DSH 接入本地优先的 Noema 长期记忆，支持工作前召回、设置页管理和从 Codex、Claude Code、Cursor、Hermes 等导入已有记忆；MIT、Release / npm `next` `0.1.0-rc.2`，已在 DSH `0.1.0-rc.6` 验证并有 CI 与测试，项目仍新，标注为早期。
 - [EverOS Memory for DSH](https://github.com/EverMind-AI/EverOS/tree/main/examples/dsh)：把用户、助手、工具调用和结果轨迹写入本地 EverOS，并在后续会话开始前召回；Apache-2.0，插件 `0.1.0` 支持 DSH `>=0.1.0-rc.6 <0.2.0-0`，但尚未发布 npm，延迟提取还依赖未进入标签版的 EverOS 能力。轨迹可能含源码、命令和工具输出，外部模型配置需单独审查，标注为早期。
 - [dsh-at-file](https://github.com/omdsh-dev/dsh-at-file)：在输入框中通过 `@file` 搜索工作区文件并附加内容。
 - [dsh-shikitor](https://github.com/oneworks-ai/shikitor/tree/master/packages/dsh-shikitor)：在输入区统一发现 `#` 会话、`@` 工作区文件、`$` Skill 和 `/` 命令，并提供可扩展的工作区文件编辑器；MIT、npm `1.0.2`，支持 DSH `>=0.1.0-rc.5 <0.2.0`。编辑默认自动保存，外观与路径规则保存在浏览器侧。
@@ -222,6 +222,7 @@ dsh --profile web --dump-config
 - [dsh-browser](https://github.com/Lum1104/dsh-browser)：Chrome 侧边栏扩展，让 DSH 直接操作当前浏览器页面。
 - [dsh-vision-toolkit](https://github.com/Anionex/dsh-vision-toolkit)：图片问答、长截图 OCR、UI 还原、Grounding 和像素对比。
 - [dsh-computer-use](https://github.com/Anionex/dsh-computer-use)：原生 macOS Computer Use Bundle，优先使用 Accessibility，拒绝过期观察并按应用、Session 和操作范围管理权限；当前为早期 `0.1.0`，需从源码检出目录安装。
+- [dsh-ios](https://github.com/ZSeven-W/dsh-ios)：在 DSH 对话中提供 iOS 模拟器与 USB 真机的实时画面，以及 21 个构建运行、语义 UI 自动化、日志、回溯和泄漏检查工具；MIT、npm / Release `0.1.0-rc.1`，已在 DSH `0.1.0-rc.6` 验证，并有 CI 与烟测。当前仍为预发布且仅支持 macOS + 完整 Xcode；可选 AXe 首次可能下载经 SHA-256 校验的二进制，OCR 会本地编译，真机控制需用户预置并签名 WebDriverAgent，工具可执行构建和真实设备操作，因此标注为早期。
 - [modlens](https://github.com/liustack/modlens)：通过粘贴图片和模型路由让纯文本模型获得视觉能力，是以独立视觉工具处理工作区图片之外的另一种方案。
 - [ModSearch](https://github.com/liustack/modsearch)：为 DSH 补充 Web 搜索、X 搜索和网页正文读取，返回结构化证据；MIT，已发布 `v5.4.2`，不同搜索通道可能依赖外部 CLI、登录、API Key、额度与各自服务条款。
 - [dsh-better-browser](https://github.com/titanwings/dsh-better-browser)：通过外部 Kimi WebBridge 操作保留登录态的真实浏览器，按任务维护标签页会话；需另行安装并运行 WebBridge。

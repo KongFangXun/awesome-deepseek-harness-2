@@ -202,10 +202,10 @@ Git リポジトリからインストールする場合は、commit を固定し
 
 ### コンテキスト・Session・入力
 
-- [dsh-context](https://github.com/bowenliang123/dsh-context)：Web UI の Context Panel と `/context` Command で、System Prompt、Tool Schema、Message、Injection、Reply、Tool Result の Request ごとの Token 構成を表示し、Compaction、Pruning、Cache-hit も示す。Apache-2.0、npm / Release `0.17.0`。DSH `0.1.0-rc.8` の依存関係で Build され、Host / Client Test を備える。外部 Service は不要だが、UI は npm の最新版を最大 1 時間に 1 回確認する。
+- [dsh-context](https://github.com/bowenliang123/dsh-context)：Web UI の Context Panel と `/context` Command で、System Prompt、Tool Schema、Message、Injection、Reply、Tool Result の Request ごとの Token 構成を表示し、Compaction、Pruning、Cache-hit も示す。Apache-2.0、npm / Release `0.19.2`。DSH Peer 互換範囲を `^0.1.0-rc.7` まで広げ、Host / Client Test を備える。外部 Service は不要だが、UI は npm の最新版を最大 1 時間に 1 回確認する。
 - [dsh-context-doctor](https://github.com/Zhenyu98/dsh-context-doctor)：AGENTS.md、Skill ディレクトリ、ツール Schema のコンテキスト Token コストと競合を監査。
 - [dsh-memory-evolve](https://github.com/csyangwen/dsh-memory-evolve)：Session をまたぐ記憶、バックグラウンド進化、ブランチ認識機能。
-- [dsh-noema](https://github.com/ZSeven-W/dsh-noema)：ローカル優先の Noema 長期記憶を DSH に接続し、作業前の想起、設定ページでの管理、Codex / Claude Code / Cursor などからの既存記憶インポートに対応。MIT、`0.1.0-rc.1`。DSH `0.1.0-rc.6` で検証済みだが新しいため初期段階。
+- [dsh-noema](https://github.com/ZSeven-W/dsh-noema)：ローカル優先の Noema 長期記憶を DSH に接続し、作業前の想起、設定ページでの管理、Codex / Claude Code / Cursor / Hermes などからの既存記憶インポートに対応。MIT、Release / npm `next` `0.1.0-rc.2`。DSH `0.1.0-rc.6` で検証され、CI と Test もあるが新しいため初期段階。
 - [EverOS Memory for DSH](https://github.com/EverMind-AI/EverOS/tree/main/examples/dsh)：User、Assistant、Tool Call、Tool Result の軌跡をローカル EverOS に保存し、後続 Session 前に想起。Apache-2.0、Plugin `0.1.0`、DSH `>=0.1.0-rc.6 <0.2.0-0` 対応。ただし npm 未公開で、遅延抽出は未 Tag の EverOS 機能に依存する。軌跡には Source、Command、Tool Output が含まれ得るため、外部 Model 設定は別途確認が必要。初期段階。
 - [dsh-at-file](https://github.com/omdsh-dev/dsh-at-file)：入力欄の `@file` でワークスペース内のファイルを検索し、内容を添付。
 - [dsh-shikitor](https://github.com/oneworks-ai/shikitor/tree/master/packages/dsh-shikitor)：Composer で `#` Session、`@` Workspace File、`$` Skill、`/` Command を統合検索し、拡張可能な Workspace File Editor も提供。MIT、npm `1.0.2`、DSH `>=0.1.0-rc.5 <0.2.0` 対応。編集は既定で自動保存され、外観と Path Rule は Browser 側に保存される。
@@ -222,6 +222,7 @@ Git リポジトリからインストールする場合は、commit を固定し
 - [dsh-browser](https://github.com/Lum1104/dsh-browser)：DSH から現在のブラウザページを直接操作できる Chrome サイドバー拡張。
 - [dsh-vision-toolkit](https://github.com/Anionex/dsh-vision-toolkit)：画像 Q&A、長いスクリーンショットの OCR、UI 再現、Grounding、ピクセル比較。
 - [dsh-computer-use](https://github.com/Anionex/dsh-computer-use)：Accessibility を優先し、古い観測を拒否し、アプリ・Session・操作単位で権限を管理するネイティブ macOS Computer Use Bundle。現在は初期 `0.1.0` で、ソースチェックアウトからインストールする必要がある。
+- [dsh-ios](https://github.com/ZSeven-W/dsh-ios)：DSH の会話内に iOS Simulator または USB 接続 iPhone のライブ画面を表示し、Build / Run、Semantic UI Automation、Log、Backtrace、Leak 検査の 21 Tool を提供。MIT、npm / Release `0.1.0-rc.1`、DSH `0.1.0-rc.6` で検証済みで、CI と Smoke Test もある。まだ Pre-release で、完全な Xcode を備えた macOS が必要。任意の AXe は初回に SHA-256 検証済み Binary を Download する場合があり、OCR はローカルで Compile され、実機操作にはユーザーが用意して署名した WebDriverAgent が必要で、Tool は Build と実機操作を実行できるため初期段階。
 - [modlens](https://github.com/liustack/modlens)：画像の貼り付けとモデルルーティングによってテキスト専用モデルに視覚能力を与える。ワークスペース画像を独立したビジョンツールで処理する方式とは異なる選択肢。
 - [ModSearch](https://github.com/liustack/modsearch)：DSH に Web 検索、X 検索、ページ本文取得を追加し、構造化された根拠を返す。MIT、`v5.4.2`。検索経路によって外部 CLI、ログイン、API Key、Quota、各サービス規約への対応が必要。
 - [dsh-better-browser](https://github.com/titanwings/dsh-better-browser)：外部 Kimi WebBridge を通じてログイン状態を保持した実ブラウザを操作し、タスクごとにタブ Session を管理。WebBridge は別途インストールして実行する必要がある。
