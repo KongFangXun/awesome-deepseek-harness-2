@@ -197,11 +197,12 @@ Git リポジトリからインストールする場合は、commit を固定し
 - [dsh-record-replay](https://github.com/humblebanana/dsh-record-replay)：macOS デスクトップワークフローを記録して Skill を生成。現在は Xcode Command Line Tools と、別途用意した `open-record-replay` のローカルソースが必要。
 - [dsh-science-workbench](https://github.com/poplarity/dsh-science-workbench)：Cell、図、フィードバック、再実行の系譜を Manifest に記録し、環境 Snapshot と入出力 Hash も保存する再現可能な科学ワークベンチ。MIT、`v0.1.1` で、まだ初期段階。
 - [dsh-omicos](https://github.com/omicverse/dsh-omicos)：OmicOS のバイオインフォマティクス機能を DSH に接続し、永続 Python / R Kernel、Capability Catalog、Background Job、実行状況 View を提供。GPL-3.0-only、npm `0.2.1`。分析 Tool は `permission_mode: full` で動作し、ローカル Kernel を起動する場合がある。Cloud Model と上位 Plan には OmicOS Account が必要。
-- [dsh-crew](https://github.com/ZSeven-W/dsh-crew)：Claude Code または Codex から実際の DSH Worker を Dispatch し、進捗、Status Shard、Tier Policy を提供。MIT、npm `0.1.0-rc.1`。`~/.config/dsh-crew/status.d/` に書き込み、外部 Model Service では API Key が必要になる場合がある。現在の検証対象は DSH `0.1.0-rc.6` のみで、確認できる Test もないため初期段階。
+- [dsh-crew](https://github.com/ZSeven-W/dsh-crew)：Claude Code または Codex から実際の DSH Worker を Dispatch し、進捗、Status Shard、Tier Policy を提供。MIT、npm / Release `0.1.0-rc.2`。`~/.config/dsh-crew/status.d/` に書き込み、外部 Model Service では API Key が必要になる場合がある。現在の検証対象は DSH `0.1.0-rc.6` のみで、確認できる Test もないため初期段階。
 - [dsh-trading](https://github.com/maddogfinance/dsh-trading)：決定論的 Indicator、CSV Provider、対話型 Chart を備えた取引 Research 向け DSH Workbench。MIT、npm `@dsh-trading/bundle@0.1.0`。注文実行 Interface は公開せず、資金移動 Tool をヒューリスティックに遮断するが、完全な Security Boundary ではないため初期段階。
 
 ### コンテキスト・Session・入力
 
+- [dsh-context](https://github.com/bowenliang123/dsh-context)：Web UI の Context Panel と `/context` Command で、System Prompt、Tool Schema、Message、Injection、Reply、Tool Result の Request ごとの Token 構成を表示し、Compaction、Pruning、Cache-hit も示す。Apache-2.0、npm / Release `0.17.0`。DSH `0.1.0-rc.8` の依存関係で Build され、Host / Client Test を備える。外部 Service は不要だが、UI は npm の最新版を最大 1 時間に 1 回確認する。
 - [dsh-context-doctor](https://github.com/Zhenyu98/dsh-context-doctor)：AGENTS.md、Skill ディレクトリ、ツール Schema のコンテキスト Token コストと競合を監査。
 - [dsh-memory-evolve](https://github.com/csyangwen/dsh-memory-evolve)：Session をまたぐ記憶、バックグラウンド進化、ブランチ認識機能。
 - [dsh-noema](https://github.com/ZSeven-W/dsh-noema)：ローカル優先の Noema 長期記憶を DSH に接続し、作業前の想起、設定ページでの管理、Codex / Claude Code / Cursor などからの既存記憶インポートに対応。MIT、`0.1.0-rc.1`。DSH `0.1.0-rc.6` で検証済みだが新しいため初期段階。
@@ -253,11 +254,13 @@ Git リポジトリからインストールする場合は、commit を固定し
 - [Nowledge Mem](https://mem.nowledge.co/integrations/deepseek-harness)：DSH に Working Memory、プロンプト時の検索、MCP ツール、Session キャプチャを追加。外部製品 Nowledge Mem と `nmem` CLI に依存するため、オープンソースプラグインとは分けて評価するのが適切。
 - [Open Design](https://github.com/nexu-io/open-design)：構造化 Streaming、モデル検出、Cancel、Session 再開に対応する DSH ネイティブ Runtime Adapter を備えた Local-first のオープンソースデザインアプリ。Apache-2.0 で、通常のプラグインではなく大規模な独立製品。
 - [dsh-multica-runtime](https://github.com/forrestchang/dsh-multica-runtime)：Multica と DSH を接続する初期段階の Runtime ブリッジ。現在パッケージは `private`、`UNLICENSED` とされ、インストールと配布の境界は未整備。
+- [dsh-imessage](https://github.com/photon-hq/dsh-imessage)：Photon の Hosted Number 宛て 1 対 1 iMessage Text を DSH Prompt に変換し、最終回答を返信。Session 切替、停止、Approval、Question への回答も扱う。MIT、npm / Release `0.2.0`、DSH `0.1.0-rc.6` 固定で Test / CI 付き。Photon Account、送信元 Phone Number、Host 側だけに保持するローカル Credential が必要で、Message は Photon を経由する。Disconnect はローカル状態のみ消去し、Photon Cloud Resource は削除しない。新しく Hosted Service 依存のため初期段階。
 - [dsh-lark-bot](https://github.com/PlutoKeating/dsh-lark-bot)：ローカル DSH を Feishu / Lark に接続し、ストリーミングカード、ワークスペース、Session 復元、承認を提供。AGPL-3.0 で、アプリ認証情報はモード `600` で保護されたローカルの平文設定に保存される。
 - [dsh-lark](https://github.com/sugarforever/dsh-lark)：公式 Node SDK と WebSocket 長接続で DSH を Feishu / Lark に接続し、Public Callback Endpoint は不要。MIT、npm / GitHub `v0.1.1`。既定では Message Scope 3 項目のみを要求し、Credential は Environment Variable から読む。実行時は Bot として外部 Message を受信・送信する。
 - [dsh-qqbot](https://github.com/tencent-connect/dsh-qqbot)：Tencent が管理する QQ Bot プラグイン。QR Code 連携、Private/Group Session の分離、再起動後の復元に対応。MIT、`0.1.0` で、連携時に認証情報をローカル Profile へ保存する。
 - [LoongSuite DSH Plugin](https://github.com/loongsuite/dsh-plugin)：Agent Turn、Model Call、Tool 実行、Token 使用量を OpenTelemetry GenAI Trace に変換し、Jaeger、Tempo、SigNoz、Langfuse などの OTLP Backend へ送信する。Apache-2.0、Beta で、DSH `0.1.0-rc.6` の Headless / Web Profile で検証済み。Content Capture は既定で無効だが、有効化すると Source Code、Credential、個人情報が外部へ送られる可能性がある。
 - [Tencent Cloud Agent Observability for DSH](https://github.com/TencentCloud/tencentcloud-agentobs-sdk-dsh)：Tencent Cloud チーム保守の CLS 直送 Observability Plugin。OTLP Collector なしで Session、Agent Loop、Model Stream、Tool Lifecycle を 5 層 Trace に変換する。Apache-2.0、npm / Release `0.0.1`、DSH `>=0.1.0-rc.6 <0.2.0` 対応。非常に新しいため初期段階。Prompt、Response、Tool Argument / Result の Capture は既定で有効なので、機密 Repository では `captureContent` を無効化し、最小権限と Retention を設定する。
+- [Token Monitor](https://github.com/Javis603/token-monitor)：Local-first の Cross-platform Desktop Usage Tool。`v0.46.0` で `~/.dsh/sessions/` の JSONL / Zstandard Session 読み取りと、DSH の Turn ごとの Token、Prompt、Tool Record 表示を追加。MIT で、macOS Build は署名・公証済み、Windows Build は署名済み。DSH Parser の Test と CI もある。既定で Maintainer Telemetry は送信せず、任意の Multi-device Sync は集計 Usage と Account / Project Metadata を Operator 指定 Hub へ送るが、生 Prompt、Source Code、Credential は送らない。
 - [dsh-wakatime](https://github.com/dingyi222666/dsh-wakatime)：DSH の File Activity、AI Line Change、Project Time を WakaTime へ送信。MIT、npm `0.1.1`。Test はあるが新しいため初期段階。WakaTime API Key が必要で、`~/.wakatime/dsh-wakatime/` に State を書き、CLI がなければ `wakatime-cli` を自動 Download / Update する。
 
 ## 開発ツール

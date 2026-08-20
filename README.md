@@ -197,11 +197,12 @@ dsh --profile web --dump-config
 - [dsh-record-replay](https://github.com/humblebanana/dsh-record-replay)：录制 macOS 桌面工作流并生成 Skill；当前依赖 Xcode Command Line Tools 和独立的 `open-record-replay` 本地源码副本。
 - [dsh-science-workbench](https://github.com/poplarity/dsh-science-workbench)：面向可复现实验的工作台，把 Cell、图表、反馈与重跑链路记录到 Manifest，并保存环境快照和输入输出哈希；MIT、`v0.1.1`，功能仍处早期。
 - [dsh-omicos](https://github.com/omicverse/dsh-omicos)：把 OmicOS 生物信息学能力接入 DSH，提供持久 Python / R 内核、能力目录、后台任务和执行过程视图；GPL-3.0-only、npm `0.2.1`。分析工具以 `permission_mode: full` 运行并可能启动本地内核，云模型和高级套餐需要 OmicOS 账号。
-- [dsh-crew](https://github.com/ZSeven-W/dsh-crew)：从 Claude Code 或 Codex 调度真实 DSH Worker，并提供进度、状态分片和分层策略；MIT、npm `0.1.0-rc.1`，会写入 `~/.config/dsh-crew/status.d/`，外部模型服务可能需要 API Key。当前仅声明在 DSH `0.1.0-rc.6` 验证，且尚无可见测试，标注为早期。
+- [dsh-crew](https://github.com/ZSeven-W/dsh-crew)：从 Claude Code 或 Codex 调度真实 DSH Worker，并提供进度、状态分片和分层策略；MIT、npm / Release `0.1.0-rc.2`，会写入 `~/.config/dsh-crew/status.d/`，外部模型服务可能需要 API Key。当前仅声明在 DSH `0.1.0-rc.6` 验证，且尚无可见测试，标注为早期。
 - [dsh-trading](https://github.com/maddogfinance/dsh-trading)：面向交易研究的 DSH 工作台，提供确定性指标、CSV 数据源和交互式图表；MIT、npm `@dsh-trading/bundle@0.1.0`。项目不提供订单执行接口，并以启发式规则拦截资金移动类工具，但该拦截并非完备安全边界，标注为早期。
 
 ### 上下文、会话与输入
 
+- [dsh-context](https://github.com/bowenliang123/dsh-context)：在 Web UI 的 Context 面板和 `/context` 命令中，按请求展示 System Prompt、工具 Schema、消息、注入、回复和工具结果的 Token 组成，并标出压缩、剪枝与缓存命中；Apache-2.0、npm / Release `0.17.0`，以 DSH `0.1.0-rc.8` 依赖构建并含 Host、Client 测试。无需外部服务，但 UI 会每小时至多一次查询 npm 最新版本。
 - [dsh-context-doctor](https://github.com/Zhenyu98/dsh-context-doctor)：审计 AGENTS.md、Skill 目录和工具 Schema 的上下文 Token 成本与冲突。
 - [dsh-memory-evolve](https://github.com/csyangwen/dsh-memory-evolve)：跨会话记忆、后台演进和分支感知能力。
 - [dsh-noema](https://github.com/ZSeven-W/dsh-noema)：为 DSH 接入本地优先的 Noema 长期记忆，支持工作前召回、设置页管理和从 Codex、Claude Code、Cursor 等导入已有记忆；MIT、`0.1.0-rc.1`，已在 DSH `0.1.0-rc.6` 验证，项目仍新，标注为早期。
@@ -253,11 +254,13 @@ dsh --profile web --dump-config
 - [Nowledge Mem](https://mem.nowledge.co/integrations/deepseek-harness)：为 DSH 提供 Working Memory、提示时检索、MCP 工具和会话捕获；依赖外部 Nowledge Mem 产品与 `nmem` CLI，适合与开源插件分开评估。
 - [Open Design](https://github.com/nexu-io/open-design)：本地优先的开源设计应用，通过原生 DSH Runtime 适配提供结构化流式输出、模型发现、取消和会话恢复；Apache-2.0，属于大型独立产品而非普通插件。
 - [dsh-multica-runtime](https://github.com/forrestchang/dsh-multica-runtime)：连接 Multica 与 DSH 的早期运行时桥接；当前包标记为 `private`、`UNLICENSED`，安装与分发边界仍不完整。
+- [dsh-imessage](https://github.com/photon-hq/dsh-imessage)：通过 Photon 托管号码把一对一 iMessage 文本转成 DSH Prompt，并回发最终回答，支持会话切换、停止、审批和问题回答；MIT、npm / Release `0.2.0`，固定 DSH `0.1.0-rc.6`，含测试与 CI。需要 Photon 账号、发送号码和仅保留在 Host 侧的本地凭据，消息会经过 Photon；断开仅清理本地状态，不删除 Photon 云端资源。项目仍新且依赖托管服务，标注为早期。
 - [dsh-lark-bot](https://github.com/PlutoKeating/dsh-lark-bot)：把本地 DSH 接入飞书 / Lark，提供流式卡片、工作区、会话恢复与审批；采用 AGPL-3.0，应用凭据以权限 `600` 的明文配置保存在本机。
 - [dsh-lark](https://github.com/sugarforever/dsh-lark)：使用飞书官方 Node SDK 和 WebSocket 长连接把 DSH 接入飞书 / Lark，无需公网回调；MIT、npm / GitHub `v0.1.1`。默认只申请三项消息权限，凭据从环境变量读取；实际运行会接收并以机器人身份发送外部消息。
 - [dsh-qqbot](https://github.com/tencent-connect/dsh-qqbot)：腾讯团队维护的 QQ Bot 插件，支持扫码绑定、私聊与群聊会话隔离及重启恢复；MIT、`0.1.0`，绑定过程会把凭据保存到本地 Profile。
 - [LoongSuite DSH Plugin](https://github.com/loongsuite/dsh-plugin)：把 Agent Turn、模型调用、工具执行和 Token 使用转成 OpenTelemetry GenAI Trace，可发送到 Jaeger、Tempo、SigNoz、Langfuse 等 OTLP 后端；Apache-2.0、Beta，已在 DSH `0.1.0-rc.6` 的 Headless 与 Web Profile 验证。内容采集默认关闭，启用后可能外发源码、凭据和个人数据。
 - [Tencent Cloud Agent Observability for DSH](https://github.com/TencentCloud/tencentcloud-agentobs-sdk-dsh)：腾讯云团队维护的 CLS 直传可观测插件，无需 OTLP Collector，把 Session、Agent Loop、模型流和工具生命周期映射为五层 Trace；Apache-2.0、npm / Release `0.0.1`，支持 DSH `>=0.1.0-rc.6 <0.2.0`，项目很新，标注为早期。默认会把 Prompt、Response 和工具参数/结果发送到 CLS，处理敏感仓库前应关闭 `captureContent` 并配置最小权限与保留策略。
+- [Token Monitor](https://github.com/Javis603/token-monitor)：本地优先的跨平台桌面用量工具；`v0.46.0` 新增读取 `~/.dsh/sessions/` 中 JSONL / Zstandard 会话、按回合展示 Token、Prompt 和工具记录。MIT，macOS 包已签名公证、Windows 包已签名，含 DSH 解析测试与持续集成；默认不向维护者发送遥测，可选多设备同步会向操作者指定的 Hub 发送汇总用量和账号 / 项目元数据，但不发送原始 Prompt、源码或凭据。
 - [dsh-wakatime](https://github.com/dingyi222666/dsh-wakatime)：把 DSH 文件操作、AI 代码行数和项目耗时上报到 WakaTime；MIT、npm `0.1.1`，有测试但项目仍新，标注为早期。需要 WakaTime API Key，会写入 `~/.wakatime/dsh-wakatime/` 并在缺少 CLI 时自动下载或更新 `wakatime-cli`。
 
 ## 开发工具
