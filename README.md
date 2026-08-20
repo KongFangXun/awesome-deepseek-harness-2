@@ -56,7 +56,7 @@
 
 [DeepSeek Harness](https://deepseek.com/harness/)（简称 DSH 或 `dsh`）是 DeepSeek AI 开源的 Agent Harness 项目。它基于 [Cordis](https://github.com/cordiverse/cordis)，采用 **Everything is a Plugin（一切皆插件）** 的架构：模型适配器、工具、会话日志、界面和 Agent Loop 都可以通过插件树组合与替换。
 
-当前核验到的官方开发者预览版为 [`0.1.0-rc.7`](https://github.com/deepseek-ai/deepseek-harness/tree/dsh-v0.1.0-rc.7)。下方各项目标注的 DSH 版本表示其作者实际声明的开发或测试基线，不应自动视为已兼容最新预览版。
+当前核验到的官方开发者预览版为 [`0.1.0-rc.8`](https://github.com/deepseek-ai/deepseek-harness/tree/dsh-v0.1.0-rc.8)。下方各项目标注的 DSH 版本表示其作者实际声明的开发或测试基线，不应自动视为已兼容最新预览版。
 
 ### 启动 Web UI
 
@@ -209,6 +209,7 @@ dsh --profile web --dump-config
 - [dsh-at-file](https://github.com/omdsh-dev/dsh-at-file)：在输入框中通过 `@file` 搜索工作区文件并附加内容。
 - [dsh-shikitor](https://github.com/oneworks-ai/shikitor/tree/master/packages/dsh-shikitor)：在输入区统一发现 `#` 会话、`@` 工作区文件、`$` Skill 和 `/` 命令，并提供可扩展的工作区文件编辑器；MIT、npm `1.0.2`，支持 DSH `>=0.1.0-rc.5 <0.2.0`。编辑默认自动保存，外观与路径规则保存在浏览器侧。
 - [dsh-message-edit](https://github.com/Moeblack/dsh-message-edit)：分支式消息编辑、重试、重新生成和版本时间线。
+- [dsh-client-auto-retry](https://github.com/Frog755/dsh-client-auto-retry)：检测 `error`、`interrupted` 或 `max-tokens` 后自动向原会话发送“继续”，并用宽限期、冷却和连续次数上限约束重试；MIT、npm `0.3.1`，仅声明兼容 DSH `0.1.0-rc.7`。默认启动时扫描最近 15 分钟的中断会话，可能继续产生模型调用和 Token 消耗；尚无可见测试或 Release，标注为早期。
 - [dsh-prompt-studio](https://github.com/Moeblack/dsh-prompt-studio)：编辑系统提示词片段并提供实时预览。
 - [dsh-turn-rewind](https://github.com/Anionex/dsh-turn-rewind)：基于持久 Change Ledger 回退对话和工作区状态。
 - [dsh-compaction-instant](https://github.com/KitDoesIt/dsh-compaction-instant)：以确定性编译替代 LLM 摘要，并通过 `recall` / `search` 恢复被压缩内容；替换内置压缩器时需要使用 npm alias，属于较深的运行时改造。
@@ -237,6 +238,7 @@ dsh --profile web --dump-config
 - [sandbox-micro](https://github.com/omdsh-dev/sandbox-micro)：提供 fail-closed 的 microsandbox microVM 能力；安装后 Provider 与模型工具均默认关闭，必须分别显式启用，平台检查失败时不会降级为无约束宿主执行。含测试目录但尚无正式 Release；`package.json` 声明 BSD-3-Clause，但仓库根目录没有 `LICENSE` 文件，标注为早期。
 - [dsh-credentials-keyring](https://github.com/irisnb/dsh-credentials-keyring)：用 Windows Credential Manager、macOS Keychain 或 Linux Secret Service 替代明文凭据文件，并在无 Secret Service 的 Linux 上 fail closed；MIT、`0.1.0`，有内存后端测试但尚无 npm / Release，真实系统钥匙串仍待逐平台烟测，标注为早期。
 - [dsh-win32](https://github.com/sjh9714/dsh-win32)：为 Windows 提供沙箱内可运行的持久 Shell、极简模式和 `doctor` 体检；MIT、`v0.14.0`，以 98 项测试和 Windows 受限令牌沙箱 CI 验证。当前仍限制 DSH `>=0.1.0-rc.5 <0.1.0-rc.7`；Git Bash 预设需要 `danger-full-access`，沙箱内应使用会下载 GPLv2 BusyBox 的变体，Windows 控制台进程在优雅终止失败后可能升级为强制终止。
+- [dsh-exec-extension](https://github.com/LvDAO/dsh-exec-extension)：为 Headless Profile 增加一次性 Exec CLI，把 stdin、`@file`、工作目录、模型、超时、JSONL 输出和权限模式变为逐次参数；MIT `v0.1.0`，固定 DSH `0.1.0-rc.7`、Node.js 22.19+，含 Node / Rust 测试与持续集成。默认仍是 `workspace-write`，无界面的 `--approval ask` 会 fail closed；`--full-auto` / `--yolo` 会自动批准，只有显式 `--sandbox danger-full-access` 才解除沙箱。当前仅通过固定 Git Tag 安装，Git 依赖的 `prepare` 在 Agent 沙箱外执行，需先审查并显式授权。
 
 ### 主题与皮肤
 
@@ -261,12 +263,12 @@ dsh --profile web --dump-config
 ## 开发工具
 
 - [dsh-plugin-check](https://github.com/omdsh-dev/dsh-plugin-check)：检查 Manifest、Patch、构建陷阱和目录收录状态。
-- [DShScan](https://github.com/shaoshi20/dshscan)：为 DSH 插件生成规则证据、风险分和安装建议，可离线扫描本地内容，也可显式联网抓取 GitHub / npm 源码、调用 `npm audit` 或外部 LLM；MIT、npm / Release `0.3.0`，CI 和测试已覆盖 DSH 特有规则，但仅固定兼容 DSH `0.1.0-rc.6` 且同日快速迭代，标注为早期。低风险结论不等于安全审计。
+- [DShScan](https://github.com/shaoshi20/dshscan)：为 DSH 插件生成规则证据、风险分和安装建议，可离线扫描本地内容，也可显式联网抓取 GitHub / npm 源码、调用 `npm audit` 或外部 LLM；MIT、npm / Release `0.3.2`，CI 和测试已覆盖 DSH 特有规则，但仅固定兼容 DSH `0.1.0-rc.6` 且同日快速迭代，标注为早期。低风险结论不等于安全审计。
 - [dsh-fail-logger](https://github.com/Areium/dsh-fail-logger)：脱敏、去重并分类记录工具失败，将机器维护的实录沉淀进 Skill；只记录问题，不自动修改行为。
 - [dsh-session-surgeon](https://github.com/xiaoshenming/dsh-session-surgeon)：扫描、检查、导出并修复无法加载、序列断裂或残留临时文件的 DSH 会话；MIT、`v0.1.0`，支持 DSH `0.1.0-rc.6` 并从 GitHub 源码安装，标注为早期。修复默认 dry-run，`--apply` 会先写 `.bak.<utc>`；导出默认脱敏，`--no-redact` 会显式关闭保护。
 - [deepseek-harness-action](https://github.com/Lixiaoyiao/deepseek-harness-action)：在 GitHub Actions 中使用 DSH 做 PR Review、CI 诊断、自动修复和 Issue → PR；写权限默认关闭，并将验证放在无凭据容器中运行。
 - [Awesome DSH Plugins Radar](https://github.com/AdamPlatin123/awesome-dsh-plugins)：自动扫描并分别展示发现、静态、编译和运行级信号的兼容性雷达；MIT、数据高速变化且尚无 Release，“运行可用”不等于安全审计或内容质量，标注为早期。
-- [dsh-market](https://github.com/dsh-market/dsh-market)：DSH 内置插件市场，可浏览、搜索、安装、更新和卸载登记在 `awesome-dsh-plugin` 的项目；MIT、`v1.14.1`。构建脚本默认阻止，安装端点仅接受同源 POST，更新期间会阻止 Agent 运行并在失败时保留可启动状态，但目录收录仍不代表安全背书。
+- [dsh-market](https://github.com/dsh-market/dsh-market)：DSH 内置插件市场，可浏览、搜索、安装、更新和卸载登记在 `awesome-dsh-plugin` 的项目；MIT、`v1.15.0`，新增安装/更新后的 Profile 兼容性校验与单插件一键回滚。构建脚本默认阻止，安装端点仅接受同源 POST，更新期间会阻止 Agent 运行并在失败时保留可启动状态，但目录收录仍不代表安全背书。
 - [dsh-suite](https://whyihaveyou.github.io/dsh-suite/zh.html)：中英双语 DSH 生态索引，提供插件搜索、`create-dsh-plugin` 脚手架和基础兼容性元数据；目录每小时刷新，并每天把收录包安装到临时 Profile 做兼容性检查。安装成功不等于安全审计或质量保证。
 - [deepseek-harness-plugin-mcp](https://github.com/bobleer/deepseek-harness-plugin-mcp)：让其他 Agent 通过 MCP 发现、检查、安装和调用 DSH 插件；安装与运行默认关闭，只有显式启用 `--allow-install` / `--allow-runtime` 才会产生对应副作用。
 - [dsh-payload-capture](https://github.com/Moeblack/dsh-payload-capture)：捕获并落盘上行模型 API Payload，便于调试请求组装。
