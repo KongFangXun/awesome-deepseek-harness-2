@@ -194,6 +194,7 @@ dsh --profile web --dump-config
 - [dsh-agent-teams](https://github.com/NanmiCoder/dsh-agent-teams)：为 DSH 提供 Agent Teams 能力。
 - [dsh-automation](https://github.com/titanwings/dsh-automation)：按计划在全新根 Agent 和 Session 中执行独立任务，保留定义修订、运行历史和明确的工作区与权限边界。
 - [dsh-plannotator](https://github.com/titanwings/dsh-plannotator)：对 Agent 计划逐段批注并提交结构化反馈，提供草稿隔离、版本绑定和过期计划拒绝。
+- [dsh-spec-collab](https://github.com/zx490336534/dsh-spec-collab)：把产品原始需求整理为由产品、研发与双方 AI 共审的 Git 版本化 Ready Spec，AI 只能提交 Review Item 和候选 Patch，确认与正式保存仍由人完成。Apache-2.0、npm `0.1.1`，以 DSH `0.1.0-rc.8` 开发依赖构建并含 23 项测试；但同日首发、尚无 CI、GitHub Release 或独立使用证据，标注为早期。插件会在 `~/.dsh/spec-collab` 写入协作账本与独立 Git 仓库，并启动额外 AI 审核会话；HTTP 管理面默认仅回环与同源，花名并非身份认证，对外开放前必须另配认证和可信反向代理。
 - [dsh-record-replay](https://github.com/humblebanana/dsh-record-replay)：录制 macOS 桌面工作流并生成 Skill；当前依赖 Xcode Command Line Tools 和独立的 `open-record-replay` 本地源码副本。
 - [dsh-science-workbench](https://github.com/poplarity/dsh-science-workbench)：面向可复现实验的工作台，把 Cell、图表、反馈与重跑链路记录到 Manifest，并保存环境快照和输入输出哈希；MIT、`v0.1.1`，功能仍处早期。
 - [dsh-omicos](https://github.com/omicverse/dsh-omicos)：把 OmicOS 生物信息学能力接入 DSH，提供持久 Python / R 内核、能力目录、后台任务和执行过程视图；GPL-3.0-only、npm `0.2.1`。分析工具以 `permission_mode: full` 运行并可能启动本地内核，云模型和高级套餐需要 OmicOS 账号。
@@ -260,6 +261,7 @@ dsh --profile web --dump-config
 - [dsh-lark-bot](https://github.com/PlutoKeating/dsh-lark-bot)：把本地 DSH 接入飞书 / Lark，提供流式卡片、工作区、会话恢复与审批；采用 AGPL-3.0，应用凭据以权限 `600` 的明文配置保存在本机。
 - [dsh-lark](https://github.com/sugarforever/dsh-lark)：使用飞书官方 Node SDK 和 WebSocket 长连接把 DSH 接入飞书 / Lark，无需公网回调；MIT、npm / GitHub `v0.1.1`。默认只申请三项消息权限，凭据从环境变量读取；实际运行会接收并以机器人身份发送外部消息。
 - [dsh-qqbot](https://github.com/tencent-connect/dsh-qqbot)：腾讯团队维护的 QQ Bot 插件，支持扫码绑定、私聊与群聊会话隔离及重启恢复；MIT、`0.1.0`，绑定过程会把凭据保存到本地 Profile。
+- [dsh-im](https://github.com/xmanrui/dsh-im)：在一个 DSH Bundle 中统一管理飞书、微信、钉钉、企业微信、QQ、Slack、Telegram、Discord、WhatsApp 与 AI Office，支持多机器人、流式回复、工作区 / 会话绑定和远程审批。MIT、npm `0.16.0` / Git Tag `v0.16.0`、Node.js 22.19+，仓库含 85 个测试文件与发布包校验脚本；Secret / Token 仅提交给本机 Harness Host，管理 RPC 默认仅接受回环浏览器。运行时会持续接收和发送外部消息，并允许可信聊天用户触发模型与工具；除 Telegram 可选私聊白名单外，平台可见用户可执行命令，工作区 / 会话列表还可能暴露本机路径和敏感元数据，因此只能向可信用户开放。
 - [LoongSuite DSH Plugin](https://github.com/loongsuite/dsh-plugin)：把 Agent Turn、模型调用、工具执行和 Token 使用转成 OpenTelemetry GenAI Trace，可发送到 Jaeger、Tempo、SigNoz、Langfuse 等 OTLP 后端；Apache-2.0、Beta，已在 DSH `0.1.0-rc.6` 的 Headless 与 Web Profile 验证。内容采集默认关闭，启用后可能外发源码、凭据和个人数据。
 - [Tencent Cloud Agent Observability for DSH](https://github.com/TencentCloud/tencentcloud-agentobs-sdk-dsh)：腾讯云团队维护的 CLS 直传可观测插件，无需 OTLP Collector，把 Session、Agent Loop、模型流和工具生命周期映射为五层 Trace；Apache-2.0、npm / Release `0.0.1`，支持 DSH `>=0.1.0-rc.6 <0.2.0`，项目很新，标注为早期。默认会把 Prompt、Response 和工具参数/结果发送到 CLS，处理敏感仓库前应关闭 `captureContent` 并配置最小权限与保留策略。
 - [Token Monitor](https://github.com/Javis603/token-monitor)：本地优先的跨平台桌面用量工具；`v0.46.0` 新增读取 `~/.dsh/sessions/` 中 JSONL / Zstandard 会话、按回合展示 Token、Prompt 和工具记录。MIT，macOS 包已签名公证、Windows 包已签名，含 DSH 解析测试与持续集成；默认不向维护者发送遥测，可选多设备同步会向操作者指定的 Hub 发送汇总用量和账号 / 项目元数据，但不发送原始 Prompt、源码或凭据。
