@@ -215,6 +215,7 @@ Git リポジトリからインストールする場合は、commit を固定し
 - [dsh-turn-rewind](https://github.com/Anionex/dsh-turn-rewind)：永続的な Change Ledger に基づき、会話とワークスペース状態を巻き戻す。
 - [dsh-compaction-instant](https://github.com/KitDoesIt/dsh-compaction-instant)：LLM 要約を決定論的コンパイルに置き換え、`recall` / `search` で圧縮された内容を復元。内蔵 compactor の置換には npm alias が必要で、Runtime への比較的深い変更となる。
 - [toolshrink](https://github.com/unclecode/toolshrink)：Test、Diff、JSON、Directory Tree、Log、Install Output の構造を認識して圧縮し、必要に応じて元の出力への参照を保持。MIT `0.1.0`。現在は Source Build と Global `~/.dsh/cordis.patch.yml` の編集が必要で、保存した原文は 24 時間後に削除されるため初期段階。
+- [dsh-tool-squeeze](https://github.com/w2829562572-dev/dsh-tool-squeeze)：Test、Diff、JSON、Directory Tree、Log、Install、HTML の Tool Output を決定論的かつローカル優先で圧縮。MIT `v0.1.0`、DSH / `dsh-tools` `0.1.0-rc.8` に固定対応し、Project は 21 Test と再現可能な Benchmark を報告している。Source Build と Plugin 独自の原文保持が必要な toolshrink と異なり、GitHub Bundle として直接導入でき、追加の Model / Network Call を行わず、完全な原文を公式 Spill Store に委ねる。ただし圧縮は Lossy で、同日初回 Release かつ CI や独立利用の証拠がないため初期段階。
 - [dsh-whale-report](https://github.com/SenmuuuuW/dsh-whale-report)：Session Event Log から日次、週次、月次、任意期間の Report を読み取り専用で生成し、`v0.4.0` では DeepTrace、Cost と Balance、Finding、Collaboration、Activity、Resource、Risk、Session Trace を追加。Session 履歴は書き換えず、MIT で、まだ初期段階。
 
 ### ブラウザ・ビジョン・インターフェース
