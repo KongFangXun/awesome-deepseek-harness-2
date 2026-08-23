@@ -204,7 +204,8 @@ dsh --profile web --dump-config
 
 ### 上下文、会话与输入
 
-- [dsh-context](https://github.com/bowenliang123/dsh-context)：在 Web UI 的 Context 面板和 `/context` 命令中，按请求展示 System Prompt、工具 Schema、消息、注入、回复和工具结果的 Token 组成，并标出压缩、剪枝与缓存命中；Apache-2.0、npm / Release `0.24.1`，支持 DSH `0.1.1` 的多模态附件视图，并补充 Raw / Sent / Token 图像事实行与完整文件名换行；Peer 依赖仍从 `^0.1.0-rc.7` 起，并含 Host、Client 测试。无需外部服务，但 UI 会每小时至多一次查询 npm 最新版本。
+- [dsh-context](https://github.com/bowenliang123/dsh-context)：在 Web UI 的 Context 面板和 `/context` 命令中，按请求展示 System Prompt、工具 Schema、消息、注入、回复和工具结果的 Token 组成，并标出压缩、剪枝与缓存命中；Apache-2.0、npm / Release `0.25.3`，在 DSH `0.1.1` 多模态附件视图与 Raw / Sent / Token 图像事实的基础上，统一展开详情的 Section Card、统计全会话图像数、为折叠消息增加 Image 标记，并修正周末低谷计费；Peer 依赖仍从 `^0.1.0-rc.7` 起，并含 Host、Client 测试。无需外部服务，但 UI 会每小时至多一次查询 npm 最新版本。
+- [dsh-profile-settings](https://github.com/XMoon/dsh-profile-settings)：在全局 `settings.yaml` 上增加按 Profile 隔离的 `settings.patch.yml` 覆盖层，支持递归合并、`!unset`、来源检查、热重载及设置页管理，并保持原有 `ctx.settings` 接口。MIT、npm / Git Tag `0.1.0`、Node.js 22.6+，Peer 依赖锁定 DSH `0.1.1-rc.2` 系列，含 15 个测试文件；最新 CI 的源码检查、构建与 Node 22.6 / 24 / 26 发布包烟测通过，但总流程仍在 npm 发布步骤失败，而 Registry 已可获取 `0.1.0`。插件默认可写 Profile 覆盖文件，`promote` / `demote` / `migrate` 还会跨全局与 Profile 文档改值，并以锁、原子替换和迁移备份约束写入；项目同日首发、无 GitHub Release 或独立使用证据，因此标注为早期。
 - [dsh-context-doctor](https://github.com/Zhenyu98/dsh-context-doctor)：审计 AGENTS.md、Skill 目录和工具 Schema 的上下文 Token 成本与冲突。
 - [dsh-memory-evolve](https://github.com/csyangwen/dsh-memory-evolve)：跨会话记忆、后台演进和分支感知能力。
 - [dsh-noema](https://github.com/ZSeven-W/dsh-noema)：为 DSH 接入本地优先的 Noema 长期记忆，支持工作前召回、设置页管理和从 Codex、Claude Code、Cursor、Hermes 等导入已有记忆；MIT、Release / npm `next` `0.1.0-rc.3`，已在 DSH `0.1.1-rc.1` 验证并有 CI 与测试，项目仍新，标注为早期。
@@ -277,7 +278,7 @@ dsh --profile web --dump-config
 - [dsh-session-surgeon](https://github.com/xiaoshenming/dsh-session-surgeon)：扫描、检查、导出并修复无法加载、序列断裂或残留临时文件的 DSH 会话；MIT、`v0.1.0`，支持 DSH `0.1.0-rc.6` 并从 GitHub 源码安装，标注为早期。修复默认 dry-run，`--apply` 会先写 `.bak.<utc>`；导出默认脱敏，`--no-redact` 会显式关闭保护。
 - [deepseek-harness-action](https://github.com/Lixiaoyiao/deepseek-harness-action)：在 GitHub Actions 中使用 DSH 做 PR Review、CI 诊断、自动修复和 Issue → PR；写权限默认关闭，并将验证放在无凭据容器中运行。
 - [Awesome DSH Plugins Radar](https://github.com/AdamPlatin123/awesome-dsh-plugins)：自动扫描并分别展示发现、静态、编译和运行级信号的兼容性雷达；MIT、数据高速变化且尚无 Release，“运行可用”不等于安全审计或内容质量，标注为早期。
-- [dsh-market](https://github.com/dsh-market/dsh-market)：DSH 内置插件市场，可浏览、搜索、安装、更新和卸载登记在 `awesome-dsh-plugin` 的项目；MIT、`v1.18.0`，提供安装 / 更新后的 Profile 兼容性校验与单插件一键回滚。构建脚本默认阻止，安装端点仅接受同源 POST，更新期间会阻止 Agent 运行并在失败时保留可启动状态，但目录收录仍不代表安全背书。
+- [dsh-market](https://github.com/dsh-market/dsh-market)：DSH 内置插件市场，可浏览、搜索、安装、更新和卸载登记在 `awesome-dsh-plugin` 的项目；MIT、`v1.18.1`，提供安装 / 更新后的 Profile 兼容性校验与单插件一键回滚，并修复无法持久保留的分类折叠、自身 Optional Peer 误报及 Git 安装代理传递。构建脚本默认阻止，安装端点仅接受同源 POST，更新期间会阻止 Agent 运行并在失败时保留可启动状态，但目录收录仍不代表安全背书。
 - [dsh-suite](https://whyihaveyou.github.io/dsh-suite/zh.html)：中英双语 DSH 生态索引，提供插件搜索、`create-dsh-plugin` 脚手架和基础兼容性元数据；目录每小时刷新，并每天把收录包安装到临时 Profile 做兼容性检查。安装成功不等于安全审计或质量保证。
 - [deepseek-harness-plugin-mcp](https://github.com/bobleer/deepseek-harness-plugin-mcp)：让其他 Agent 通过 MCP 发现、检查、安装和调用 DSH 插件；安装与运行默认关闭，只有显式启用 `--allow-install` / `--allow-runtime` 才会产生对应副作用。
 - [dsh-payload-capture](https://github.com/Moeblack/dsh-payload-capture)：捕获并落盘上行模型 API Payload，便于调试请求组装。
