@@ -56,7 +56,7 @@
 
 [DeepSeek Harness](https://deepseek.com/harness/)（简称 DSH 或 `dsh`）是 DeepSeek AI 开源的 Agent Harness 项目。它基于 [Cordis](https://github.com/cordiverse/cordis)，采用 **Everything is a Plugin（一切皆插件）** 的架构：模型适配器、工具、会话日志、界面和 Agent Loop 都可以通过插件树组合与替换。
 
-当前核验到的官方开发者预览版为 [`0.1.1-rc.2`](https://github.com/deepseek-ai/deepseek-harness/tree/dsh-v0.1.1-rc.2)。下方各项目标注的 DSH 版本表示其作者实际声明的开发或测试基线，不应自动视为已兼容最新预览版。
+当前核验到的官方 GitHub 开发者预览版为 [`0.1.2-alpha.1`](https://github.com/deepseek-ai/deepseek-harness/releases/tag/dsh-v0.1.2-alpha.1)，而 npm `latest` 仍为 `0.1.1-rc.2`。该 Alpha 增加子代理模型配置、ACP 自动化与多模态 / 持久终端修复；DeepSeek 适配器默认会附带已启用插件包的名称和版本（可关闭），会话日志增量上传仍为默认关闭。下方各项目标注的 DSH 版本表示其作者实际声明的开发或测试基线，不应自动视为已兼容最新预览版。
 
 ### 启动 Web UI
 
@@ -205,7 +205,7 @@ dsh --profile web --dump-config
 
 ### 上下文、会话与输入
 
-- [dsh-context](https://github.com/bowenliang123/dsh-context)：在 Web UI 的 Context 面板和 `/context` 命令中，按请求展示 System Prompt、工具 Schema、消息、注入、回复和工具结果的 Token 组成，并标出压缩、剪枝与缓存命中；Apache-2.0、npm / Release `0.33.1`。`0.31` 起以正负 Delta 显示相邻请求的净增长与回收，`0.32` 为每步增加 User / In / Response 摘要并可直达原消息，`0.33` 增加文件活动卡片，按读、写、搜索统计文件、估算行增减并跳到对应工具结果，`0.33.1` 再补充按活跃度、时间、路径与用途排序。Peer 依赖仍从 `^0.1.0-rc.7` 起，源码测试采用逐文件覆盖门槛并有 Bundle 烟测；无需外部服务，但 UI 会每小时至多一次查询 npm 最新版本。
+- [dsh-context](https://github.com/bowenliang123/dsh-context)：在 Web UI 的 Context 面板和 `/context` 命令中，按请求展示 System Prompt、工具 Schema、消息、注入、回复和工具结果的 Token 组成，并标出压缩、剪枝与缓存命中；Apache-2.0、npm / Release `0.35.0`。新版加入可跳转任意层级子代理的 Agent Network，并让 File Activity 识别 PTC / Code Mode 内层调用、缺损日志与读取行范围；Host 明确声明 `canOpenPath` 时可点击交给系统默认程序打开文件，工作区内路径按 Session 根目录解析，搜索模式等不可证明路径不会开放。Peer 依赖仍从 `^0.1.0-rc.7` 起，源码测试采用逐文件覆盖门槛并有 Bundle 烟测；无需外部服务，但 UI 会每小时至多一次查询 npm，官方 Registry 不可达时会回退到 npmmirror。
 - [dsh-profile-settings](https://github.com/XMoon/dsh-profile-settings)：在全局 `settings.yaml` 上增加按 Profile 隔离的 `settings.patch.yml` 覆盖层，支持递归合并、`!unset`、来源检查、热重载及设置页管理，并保持原有 `ctx.settings` 接口。MIT、npm / Git Tag `0.1.0`、Node.js 22.6+，Peer 依赖锁定 DSH `0.1.1-rc.2` 系列，含 15 个测试文件；最新 CI 的源码检查、构建与 Node 22.6 / 24 / 26 发布包烟测通过，但总流程仍在 npm 发布步骤失败，而 Registry 已可获取 `0.1.0`。插件默认可写 Profile 覆盖文件，`promote` / `demote` / `migrate` 还会跨全局与 Profile 文档改值，并以锁、原子替换和迁移备份约束写入；项目同日首发、无 GitHub Release 或独立使用证据，因此标注为早期。
 - [dsh-context-doctor](https://github.com/Zhenyu98/dsh-context-doctor)：审计 AGENTS.md、Skill 目录和工具 Schema 的上下文 Token 成本与冲突。
 - [dsh-memory-evolve](https://github.com/csyangwen/dsh-memory-evolve)：跨会话记忆、后台演进和分支感知能力。
@@ -217,6 +217,7 @@ dsh --profile web --dump-config
 - [dsh-client-auto-retry](https://github.com/Frog755/dsh-client-auto-retry)：检测 `error`、`interrupted` 或 `max-tokens` 后自动向原会话发送“继续”，并用宽限期、冷却和连续次数上限约束重试；MIT、npm `0.3.1`，仅声明兼容 DSH `0.1.0-rc.7`。默认启动时扫描最近 15 分钟的中断会话，可能继续产生模型调用和 Token 消耗；尚无可见测试或 Release，标注为早期。
 - [dsh-prompt-studio](https://github.com/Moeblack/dsh-prompt-studio)：编辑系统提示词片段并提供实时预览。
 - [dsh-turn-rewind](https://github.com/Anionex/dsh-turn-rewind)：基于持久 Change Ledger 回退对话和工作区状态。
+- [dsh-filesnap](https://github.com/extracurricular-ai/dsh-filesnap)：把对话与工作区文件一起回退到显式指定的轮次，并始终在新 Fork 中恢复，预先建立救援点后可用 `/redo` 反向撤销，不改 Git 分支、提交、Stash 或 Worktree。Apache-2.0、npm / Release `0.2.1`、Node.js `^22.19` 或 24+，支持 Linux / macOS / Windows x64 与 arm64；CI 从源码构建当前 DSH 并运行 10 个测试文件和客户端构建。插件通过随包 Rust `filesnap` 二进制捕获二进制、忽略文件及已观察到的工作区外 `ctx.fs` 路径，恢复时可能覆盖或按明确 Tombstone 删除文件；快照以当前用户权限明文保存在平台数据目录。卸载后，含自定义事件的已捕获 Session 需重装插件才能打开；项目同日首发且没有独立使用证据，因此标注为早期。
 - [dsh-compaction-instant](https://github.com/KitDoesIt/dsh-compaction-instant)：以确定性编译替代 LLM 摘要，并通过 `recall` / `search` 恢复被压缩内容；替换内置压缩器时需要使用 npm alias，属于较深的运行时改造。
 - [toolshrink](https://github.com/unclecode/toolshrink)：按测试、Diff、JSON、目录树、日志和安装输出的结构做内容感知压缩，并在需要时保留原始输出引用；MIT、`0.1.0`，目前需从源码构建并修改全局 `~/.dsh/cordis.patch.yml`，暂存的原始输出会在 24 小时后清理，标注为早期。
 - [dsh-tool-squeeze](https://github.com/w2829562572-dev/dsh-tool-squeeze)：为测试、Diff、JSON、目录树、日志、安装输出和 HTML 提供确定性、本地优先的工具结果压缩；MIT `v0.1.0`，固定兼容 DSH / `dsh-tools` `0.1.0-rc.8`，项目声明 21 项测试及可复现基准。与需源码构建并自行保留原文的 toolshrink 相比，它可直接安装 GitHub Bundle、无需额外模型或网络调用，并将完整原文交给官方 Spill Store；压缩仍有损，且项目为同日初发、无 CI 或独立使用证据，标注为早期。
@@ -227,7 +228,7 @@ dsh --profile web --dump-config
 - [dsh-browser](https://github.com/Lum1104/dsh-browser)：Chrome 侧边栏扩展，让 DSH 直接操作当前浏览器页面。
 - [dsh-vision-toolkit](https://github.com/Anionex/dsh-vision-toolkit)：图片问答、长截图 OCR、UI 还原、Grounding 和像素对比。
 - [dsh-computer-use](https://github.com/Anionex/dsh-computer-use)：原生 macOS Computer Use Bundle，优先使用 Accessibility，拒绝过期观察并按应用、Session 和操作范围管理权限；当前为早期 `0.1.0`，需从源码检出目录安装。
-- [dsh-plugin-appshot](https://github.com/TaurusWood/dsh-plugin-appshot)：通过 macOS / Windows 全局快捷键截取当前前台窗口，并把图片作为 Attachment 送入当前 DSH Composer；MIT、npm / Release `0.4.0`，仓库包含 34 个测试路径与双平台 Native 构建。预构建包内含 macOS App 和 Windows 自包含 EXE；macOS 需要屏幕录制与辅助功能权限，Native Agent 会持久化截图并通过本机 SSE 交给 Host。包元数据未声明 Peer 依赖，开发依赖仍固定旧 DSH `0.1.0-rc.6`，当前 rc.2 兼容性与高权限链路仍需实机复核，因此标注为早期。
+- [dsh-plugin-appshot](https://github.com/TaurusWood/dsh-plugin-appshot)：通过 macOS / Windows 全局快捷键截取当前前台窗口，并把图片作为 Attachment 送入当前 DSH Composer；MIT、npm / Release `0.4.1`，新版修复 macOS 14+ Native Agent 构建，仓库包含 34 个测试路径与双平台 Native 构建。预构建包内含 macOS App 和 Windows 自包含 EXE；macOS 需要屏幕录制与辅助功能权限，Native Agent 会持久化截图并通过本机 SSE 交给 Host。包元数据未声明 Peer 依赖，开发依赖仍固定旧 DSH `0.1.0-rc.6`，当前 Alpha 兼容性与高权限链路仍需实机复核，因此标注为早期。
 - [dsh-ios](https://github.com/ZSeven-W/dsh-ios)：在 DSH 对话中提供 iOS 模拟器与 USB 真机的实时画面，以及 22 个构建运行、语义 UI 自动化、SwiftUI Preview 热重载、日志、回溯和泄漏检查工具；MIT、Release / npm `latest` / `next` `0.1.0-rc.5`，最新 Release Commit 的 Plugin Check 与发布流程均通过，并自报 744 个验证步骤。rc.5 为繁忙 WDA 增加快速超时、10 秒冷却和共享尺寸缓存，并为停滞 MJPEG 流增加 8 秒看门狗，但原始真机故障尚未在真实设备上复现。包的 Peer 依赖从 DSH `0.1.0-rc.6` 起、README Requirements 也写 `>=0.1.0-rc.6`，而页首仍遗留 rc.3 / DSH `0.1.1-rc.1` 的旧声明，兼容元数据尚未统一。当前仍为预发布且仅支持 macOS + 完整 Xcode；可选 AXe 首次可能下载经 SHA-256 校验的二进制，OCR 会本地编译，真机控制需用户预置并签名 WebDriverAgent，工具可执行构建和真实设备操作，因此标注为早期。
 - [dsh-android](https://github.com/ZSeven-W/dsh-android)：把 Android 模拟器或 USB 真机的实时画面接入 DSH 对话，并提供 20 个设备发现、构建安装、语义 / OCR UI 操作、日志、进程和内存工具。MIT、Release / npm `next` `0.1.0-rc.4`，在 DSH `0.1.1-rc.1` 与 Node.js 24.11+ 上验证，含 7 组静态烟测和通过的 CI；但同日首发、全部 Release 均为预发布，npm `latest` 仍停在 rc.1，安装 rc.4 需显式使用 `@next`，因此标注为早期。运行需要 adb / Android SDK，工具可构建并安装 APK、控制设备和读取日志；OCR 仅支持 macOS 并会在首次使用时本地编译随包 Swift，浏览器路由采用回环限制与短时 HMAC Capability。
 - [modlens](https://github.com/liustack/modlens)：通过粘贴图片和模型路由让纯文本模型获得视觉能力，是以独立视觉工具处理工作区图片之外的另一种方案。
